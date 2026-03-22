@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amortized O(1) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1>Amortized <code>O(1)</code></h1>
+      <p>
+        Amortized time oznacza, że raz na jakiś czas trafia się droga operacja, ale średni koszt na
+        jedną operację pozostaje niski. Klasyczny przykład to append w dynamicznej tablicy.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / Amortized <code>O(1)</code></p>
+        <div class="tag">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Rzadki koszt rozmywa się w średniej</h2>
+        <p class="section-intro">
+          Jeśli masz dużo tanich operacji i od czasu do czasu jedną drogą, całkowity koszt może
+          nadal wyjść liniowo, a średni koszt jednej operacji stały. Tak działa między innymi
+          append w dynamic array, np. C++ <code>vector.push_back()</code>.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>append w dynamicznej tablicy</li>
+              <li>append w dynamic array, np. C++ <code>vector.push_back()</code></li>
+              <li>powiększanie bufora przez podwojenie pojemności</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Skąd to się bierze</h3>
+            <p>
+              Resize jest kosztowny, bo trzeba skopiować stare dane. Ale zdarza się tak rzadko, że
+              średnio pojedyncze dopisanie nadal wychodzi <code>O(1)</code>.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Kluczowy takeaway</h3>
+            <p>
+              Amortized time to średni koszt na operację, a nie koszt najdroższej pojedynczej operacji.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla amortized O(1)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: własna dynamiczna tablica w C</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct {
+    int* data;
+    int size;
+    int capacity;
+} DynamicArray;
+
+void append(DynamicArray* arr, int value) {
+    if (arr->size == arr->capacity) {
+        int new_capacity = arr->capacity == 0 ? 1 : arr->capacity * 2;
+        int* new_data = malloc(sizeof(int) * new_capacity);
+
+        for (int i = 0; i &lt; arr->size; i++) {
+            new_data[i] = arr->data[i];
+        }
+
+        free(arr->data);
+        arr->data = new_data;
+        arr->capacity = new_capacity;
+    }
+
+    arr->data[arr->size++] = value;
+}
+
+int main(void) {
+    DynamicArray arr = {NULL, 0, 0};
+    append(&arr, 10);
+    append(&arr, 20);
+    append(&arr, 30);
+
+    printf("%d %d %d\n", arr.data[0], arr.data[1], arr.data[2]);
+    free(arr.data);
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: podwajanie pojemności</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+struct DynamicArray {
+    std::unique_ptr&lt;int[]&gt; data;
+    int size = 0;
+    int capacity = 0;
+
+    void append(int value) {
+        if (size == capacity) {
+            int new_capacity = capacity == 0 ? 1 : capacity * 2;
+            std::unique_ptr&lt;int[]&gt; bigger(new int[new_capacity]);
+
+            for (int i = 0; i &lt; size; ++i) {
+                bigger[i] = data[i];
+            }
+
+            data = std::move(bigger);
+            capacity = new_capacity;
+        }
+
+        data[size++] = value;
+    }
+};
+
+int main() {
+    DynamicArray arr;
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+
+    std::cout &lt;&lt; arr.data[0] &lt;&lt; ' ' &lt;&lt; arr.data[1] &lt;&lt; ' ' &lt;&lt; arr.data[2] &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: append z okazjonalnym resize</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class DynamicArray
+{
+    private int[] data = new int[1];
+    private int size = 0;
+
+    public void Append(int value)
+    {
+        if (size == data.Length)
+        {
+            int[] bigger = new int[data.Length * 2];
+            Array.Copy(data, bigger, size);
+            data = bigger;
+        }
+
+        data[size++] = value;
+    }
+
+    public int this[int index] =&gt; data[index];
+}
+
+class Program
+{
+    static void Main()
+    {
+        DynamicArray arr = new DynamicArray();
+        arr.Append(10);
+        arr.Append(20);
+        arr.Append(30);
+
+        Console.WriteLine($"{arr[0]} {arr[1]} {arr[2]}");
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: własny append z powiększaniem bufora</div>
+            <div class="code-shell">
+              <pre><code>class DynamicArray:
+    def __init__(self) -> None:
+        self.capacity = 1
+        self.size = 0
+        self.data = [None] * self.capacity
+
+    def append(self, value: int) -&gt; None:
+        if self.size == self.capacity:
+            bigger = [None] * (self.capacity * 2)
+            for i in range(self.size):
+                bigger[i] = self.data[i]
+            self.data = bigger
+            self.capacity *= 2
+
+        self.data[self.size] = value
+        self.size += 1
+
+
+arr = DynamicArray()
+arr.append(10)
+arr.append(20)
+arr.append(30)
+print(arr.data[:arr.size])</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

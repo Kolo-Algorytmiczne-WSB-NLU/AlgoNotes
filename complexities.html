@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Złożoności Obliczeniowe - Konspekt</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="brand">Algorytms</div>
+        <nav class="site-nav" aria-label="Nawigacja główna">
+          <a href="index.html">Start</a>
+          <a href="structures.html">Struktury danych</a>
+          <a class="active" href="complexities.html">Złożoności</a>
+          <a href="index-copy.html">Poprzednia wersja</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <h1>Złożoności obliczeniowe od intuicji do praktyki</h1>
+        <p>
+          Ta strona porządkuje najczęstsze klasy złożoności: co znaczą, jak
+          rosną i jakie operacje ze struktur danych zwykle do nich wpadają.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="complexities/o1.html"
+            >Zacznij od O(1)</a
+          >
+          <a class="button" href="complexities/amortized.html"
+            >Zobacz amortized</a
+          >
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="panel">
+          <div class="tag gold">Punkt wyjścia</div>
+          <h2 class="mt-14">Jak czytać notację Big-O</h2>
+          <p class="section-intro">
+            Big-O mówi, jak szybko rośnie koszt algorytmu lub operacji wraz ze
+            wzrostem rozmiaru danych. W praktyce porównujemy klasy wzrostu, a
+            nie dokładną liczbę instrukcji.
+          </p>
+          <div class="callout">
+            Dla struktur danych najczęściej patrzysz na koszt podstawowych
+            operacji:
+            <code>access</code>, <code>find</code>, <code>insert</code>,
+            <code>erase</code>, <code>append</code> albo zapytania na
+            przedziałach.
+          </div>
+        </section>
+
+        <section class="table-panel">
+          <div class="tag">Szybkie porównanie</div>
+          <h2 class="mt-14">Najczęstsze klasy złożoności</h2>
+          <table class="mt-18">
+            <thead>
+              <tr>
+                <th>Złożoność</th>
+                <th>Intuicja</th>
+                <th>Przykład</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>O(1)</code></td>
+                <td>Koszt stały, niezależny od wielkości danych.</td>
+                <td>
+                  Dostęp do <code>array[i]</code>, średni
+                  <a class="inline-link" href="structures/hash-map.html"
+                    >hash map lookup</a
+                  >.
+                </td>
+              </tr>
+              <tr>
+                <td><code>O(log n)</code></td>
+                <td>Każdy krok mocno zmniejsza problem, często o połowę.</td>
+                <td>Ordered map lookup, operacje na RB-tree, binary search.</td>
+              </tr>
+              <tr>
+                <td><code>O(n)</code></td>
+                <td>Przechodzisz przez dane liniowo.</td>
+                <td>Skan tablicy, wyszukiwanie w linked list.</td>
+              </tr>
+              <tr>
+                <td><code>O(k log n)</code></td>
+                <td>Powtarzasz operację logarytmiczną <code>k</code> razy.</td>
+                <td>Heap push/pop <code>k</code> razy, top K elements.</td>
+              </tr>
+              <tr>
+                <td><code>O(n log n)</code></td>
+                <td>
+                  Łączy pełne przejście z logarytmiczną pracą na elementach.
+                </td>
+                <td><code>sort()</code>, merge sort, heap sort.</td>
+              </tr>
+              <tr>
+                <td><code>O(n^2)</code></td>
+                <td>Zwykle dwie zagnieżdżone pętle po danych.</td>
+                <td>Brute force po wszystkich parach.</td>
+              </tr>
+              <tr>
+                <td><code>O(2^n)</code></td>
+                <td>Koszt eksploduje wykładniczo.</td>
+                <td>Przegląd wszystkich podzbiorów bez optymalizacji.</td>
+              </tr>
+              <tr>
+                <td><code>O(n!)</code></td>
+                <td>Jeszcze szybszy wzrost niż wykładniczy.</td>
+                <td>Przegląd wszystkich permutacji.</td>
+              </tr>
+              <tr>
+                <td>Amortized <code>O(1)</code></td>
+                <td>
+                  Raz na jakiś czas pojawia się droższa operacja, ale średnio
+                  koszt jest stały.
+                </td>
+                <td>
+                  Append w dynamic array, np. C++
+                  <code>vector.push_back()</code>.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="complexity-grid">
+          <a class="complexity-link" href="complexities/o1.html">
+            <article class="complexity-card">
+              <div class="tag">Bardzo szybkie</div>
+              <h3 class="mt-12"><code>O(1)</code></h3>
+              <p>
+                Stały koszt. Hash map lookup, array access, stack push/pop,
+                prosta formuła.
+              </p>
+              <ul class="bullet-list">
+                <li>dobre nawet dla bardzo dużych <code>n</code></li>
+                <li>na podstronie: snippet w 4 językach</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/ologn.html">
+            <article class="complexity-card">
+              <div class="tag">Szybkie</div>
+              <h3 class="mt-12"><code>O(log n)</code></h3>
+              <p>
+                Problem maleje bardzo szybko, zwykle przez dzielenie na pół.
+              </p>
+              <ul class="bullet-list">
+                <li>binary search i balanced BST</li>
+                <li>na podstronie: logarytmiczna pętla i intuicja</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/on.html">
+            <article class="complexity-card">
+              <div class="tag gold">Bardzo częste</div>
+              <h3 class="mt-12"><code>O(n)</code></h3>
+              <p>
+                Liniowe przejście po danych. To jeden z najważniejszych kosztów
+                praktycznych.
+              </p>
+              <ul class="bullet-list">
+                <li>array scan, two pointers, traversale</li>
+                <li>na podstronie: pętla i ignorowanie stałych</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/oklogn.html">
+            <article class="complexity-card">
+              <div class="tag gold">Praktyczny pattern</div>
+              <h3 class="mt-12"><code>O(k log n)</code></h3>
+              <p>
+                Powtarzasz operację logarytmiczną <code>k</code> razy, zwykle na
+                heapie.
+              </p>
+              <ul class="bullet-list">
+                <li>top K elements, merge K lists</li>
+                <li>na podstronie: heap push/pop</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/onlogn.html">
+            <article class="complexity-card">
+              <div class="tag gold">Algorytmiczny klasyk</div>
+              <h3 class="mt-12"><code>O(n log n)</code></h3>
+              <p>
+                Sortowanie i divide &amp; conquer bardzo często kończą właśnie
+                tutaj.
+              </p>
+              <ul class="bullet-list">
+                <li><code>sort()</code>, merge sort, heap sort</li>
+                <li>na podstronie: przykłady sortowania</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/on2.html">
+            <article class="complexity-card">
+              <div class="tag gold">Uwaga</div>
+              <h3 class="mt-12"><code>O(n^2)</code></h3>
+              <p>
+                Koszt kwadratowy, zwykle przez dwie pętle lub brute force po
+                parach.
+              </p>
+              <ul class="bullet-list">
+                <li>często akceptowalne tylko dla mniejszych limitów</li>
+                <li>na podstronie: klasyczne nested loops</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/o2n.html">
+            <article class="complexity-card">
+              <div class="tag gold">Backtracking</div>
+              <h3 class="mt-12"><code>O(2^n)</code></h3>
+              <p>
+                Wykładniczy wzrost. Często pojawia się przy podzbiorach i
+                rekurencji.
+              </p>
+              <ul class="bullet-list">
+                <li>typowo tylko dla małych <code>n</code></li>
+                <li>na podstronie: klasyczny Fibonacci</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/onfactorial.html">
+            <article class="complexity-card">
+              <div class="tag gold">Permutacje</div>
+              <h3 class="mt-12"><code>O(n!)</code></h3>
+              <p>
+                Jeszcze szybszy wzrost niż wykładniczy. Typowy koszt pełnego
+                generowania permutacji.
+              </p>
+              <ul class="bullet-list">
+                <li>zwykle tylko dla bardzo małych <code>n</code></li>
+                <li>na podstronie: generator permutacji</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+
+          <a class="complexity-link" href="complexities/amortized.html">
+            <article class="complexity-card">
+              <div class="tag">Amortized</div>
+              <h3 class="mt-12">Amortized <code>O(1)</code></h3>
+              <p>
+                Rzadka, droga operacja rozkłada się na wiele tanich, więc
+                średnio wychodzi stało.
+              </p>
+              <ul class="bullet-list">
+                <li>
+                  dynamic array append, np. C++ <code>vector.push_back()</code>
+                </li>
+                <li>na podstronie: resize przez podwajanie</li>
+              </ul>
+              <span class="open-link">Otwórz podstronę</span>
+            </article>
+          </a>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

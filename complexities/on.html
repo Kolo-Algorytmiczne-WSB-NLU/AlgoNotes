@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(n) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(n)</code></h1>
+      <p>
+        Linear time zwykle oznacza przejście przez liniową strukturę stałą liczbę razy. To bardzo
+        częsty i praktyczny koszt w CP.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(n)</code></p>
+        <div class="tag">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Jedno przejście po danych</h2>
+        <p class="section-intro">
+          Najczęściej chodzi o pętlę po tablicy lub linked liście, dwa wskaźniki, część zachłannych
+          rozwiązań, traversal drzewa lub grafu, a także klasyczne użycie stacka i queue.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>przejście po tablicy lub liście</li>
+              <li>two pointers</li>
+              <li>traversal drzewa albo grafu</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Stałe i dodatki</h3>
+            <p>
+              W Big-O ignorujemy stałe i niższe rzędy, więc <code>5n + 17</code> nadal pozostaje
+              w <code>O(n)</code>.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Typowe limity</h3>
+            <p>
+              Liniowe rozwiązania są zwykle bezpieczne dla danych rzędu <code>n ≤ 10^6</code>.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(n)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: pojedyncza pętla</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int n = 8;
+    int sum = 0;
+
+    for (int i = 0; i &lt; n; i++) {
+        sum += i;
+    }
+
+    printf("%d\n", sum);
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: liniowe sumowanie</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;iostream&gt;
+
+int main() {
+    int n = 8;
+    int sum = 0;
+
+    for (int i = 0; i &lt; n; ++i) {
+        sum += i;
+    }
+
+    std::cout &lt;&lt; sum &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: jedno przejście</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static void Main()
+    {
+        int n = 8;
+        int sum = 0;
+
+        for (int i = 0; i &lt; n; i++)
+        {
+            sum += i;
+        }
+
+        Console.WriteLine(sum);
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: liniowa pętla</div>
+            <div class="code-shell">
+              <pre><code>n = 8
+sum_value = 0
+
+for i in range(n):
+    sum_value += i
+
+print(sum_value)</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

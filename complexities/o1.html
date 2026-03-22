@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(1) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(1)</code></h1>
+      <p>
+        Constant time complexity. Koszt jest stały, więc rozmiar danych nie zmienia liczby kroków
+        potrzebnych dla jednej operacji.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(1)</code></p>
+        <div class="tag">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Stały koszt</h2>
+        <p class="section-intro">
+          Najczęściej oznacza to hashmap lookup, array access lub update, push i pop na stosie albo
+          podstawienie do wzoru matematycznego. W praktyce taki koszt bywa wygodny nawet przy bardzo
+          dużych limitach wejścia.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>odczyt i zapis <code>array[i]</code></li>
+              <li>średnie wyszukiwanie w <a class="inline-link" href="../structures/hash-map.html">hash map</a></li>
+              <li><code>push</code> i <code>pop</code> na stacku</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Praktyczny obraz</h3>
+            <p>
+              Jeśli wykonujesz tylko stałą liczbę prostych operacji, całe rozwiązanie nadal zostaje
+              w <code>O(1)</code>.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Typowe limity</h3>
+            <p>
+              Taki koszt jest zwykle bezpieczny nawet dla bardzo dużych danych, często rzędu
+              <code>n &gt; 10^9</code>, o ile nie powtarzasz operacji zbyt wiele razy.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(1)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: stały dostęp do tablicy</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int values[5] = {3, 8, 13, 21, 34};
+    int answer = values[3];  /* O(1) access */
+    values[1] = 99;          /* O(1) update */
+
+    printf("%d\n", answer);
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: stały dostęp do dynamic array w C++</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    std::vector&lt;int&gt; values = {3, 8, 13, 21, 34};
+    int answer = values[3];  // O(1) access
+    values[1] = 99;          // O(1) update
+
+    std::cout &lt;&lt; answer &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: tablica w C#</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] values = { 3, 8, 13, 21, 34 };
+        int answer = values[3]; // O(1)
+        values[1] = 99;         // O(1)
+
+        Console.WriteLine(answer);
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: lista indeksowana</div>
+            <div class="code-shell">
+              <pre><code>values = [3, 8, 13, 21, 34]
+answer = values[3]  # O(1) access
+values[1] = 99      # O(1) update
+
+print(answer)</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

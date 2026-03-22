@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(n log n) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(n log n)</code></h1>
+      <p>
+        To jeden z najważniejszych progów praktycznych. Wiele wydajnych algorytmów sortujących i
+        rozwiązań divide &amp; conquer kończy właśnie tutaj.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(n log n)</code></p>
+        <div class="tag">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Sortowanie i dziel oraz zwyciężaj</h2>
+        <p class="section-intro">
+          W mainstreamowych językach domyślne sortowanie ma właśnie taki oczekiwany koszt. Jeśli do
+          tego dochodzi merge liniowy po każdym poziomie podziału, także lądujesz w <code>O(n log n)</code>.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li><code>sort()</code> i jego odpowiedniki</li>
+              <li>merge sort i heap sort</li>
+              <li>divide &amp; conquer z liniowym scalaniem</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Praktyczny obraz</h3>
+            <p>
+              Bardzo często jest to wystarczająco szybkie dla <code>n ≤ 10^6</code>, szczególnie w
+              zadaniach z sortowaniem lub sweep line.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Klasyczny pattern</h3>
+            <p>
+              Wczytaj dane, posortuj i przejdź po nich jeszcze raz. To bardzo częsty szkic rozwiązania.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(n log n)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: qsort w C</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int cmp(const void* a, const void* b) {
+    return (*(const int*)a - *(const int*)b);
+}
+
+int main(void) {
+    int arr[] = {7, 1, 9, 3, 5};
+    int n = 5;
+
+    qsort(arr, n, sizeof(int), cmp); /* O(n log n) */
+
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: std::sort</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    std::vector&lt;int&gt; arr = {7, 1, 9, 3, 5};
+    std::sort(arr.begin(), arr.end()); // O(n log n)
+
+    for (int x : arr) {
+        std::cout &lt;&lt; x &lt;&lt; ' ';
+    }
+    std::cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: Array.Sort</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] arr = { 7, 1, 9, 3, 5 };
+        Array.Sort(arr); // O(n log n)
+
+        Console.WriteLine(string.Join(" ", arr));
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: sorted</div>
+            <div class="code-shell">
+              <pre><code>arr = [7, 1, 9, 3, 5]
+arr = sorted(arr)  # O(n log n)
+
+print(arr)</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

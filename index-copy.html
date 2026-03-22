@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krajobraz Struktur Danych w C++ i CP</title>
+  <style>
+    :root {
+      --bg: #f6efe6;
+      --bg-soft: rgba(255, 248, 240, 0.72);
+      --panel: rgba(255, 252, 248, 0.82);
+      --panel-strong: #fff8f0;
+      --ink: #1f2430;
+      --muted: #61584b;
+      --line: rgba(77, 54, 34, 0.14);
+      --accent: #cc5f27;
+      --accent-strong: #a13d1f;
+      --accent-soft: rgba(204, 95, 39, 0.12);
+      --teal: #0f6d6d;
+      --teal-soft: rgba(15, 109, 109, 0.1);
+      --good: #246b45;
+      --bad: #a33636;
+      --shadow: 0 22px 60px rgba(66, 36, 22, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Aptos", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(204, 95, 39, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(15, 109, 109, 0.16), transparent 24%),
+        linear-gradient(180deg, #fbf5ec 0%, #f6efe6 40%, #efe5d8 100%);
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 75%);
+      z-index: -1;
+    }
+
+    .page {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(145deg, rgba(255, 248, 240, 0.94), rgba(250, 241, 230, 0.8));
+      box-shadow: var(--shadow);
+      animation: rise 0.9s ease both;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15, 109, 109, 0.26), rgba(15, 109, 109, 0));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.15;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      max-width: 11ch;
+    }
+
+    .hero p {
+      max-width: 65ch;
+      margin: 20px 0 0;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 26px;
+      align-items: end;
+    }
+
+    .stats {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stat-card {
+      padding: 18px 18px 16px;
+      border: 1px solid rgba(15, 109, 109, 0.18);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(15, 109, 109, 0.08), rgba(255, 255, 255, 0.7));
+      backdrop-filter: blur(6px);
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.8rem;
+      color: var(--teal);
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .quick-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.66);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .quick-links a:hover {
+      transform: translateY(-2px);
+      border-color: rgba(204, 95, 39, 0.35);
+      background: rgba(255, 248, 240, 0.98);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 22px;
+      margin-top: 26px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--bg-soft);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 12px 30px rgba(53, 36, 28, 0.08);
+      animation: rise 1.05s ease both;
+    }
+
+    .sidebar h2 {
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+    }
+
+    .sidebar nav {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+
+    .sidebar a {
+      padding: 9px 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid transparent;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 248, 240, 0.96);
+      border-color: rgba(204, 95, 39, 0.25);
+      transform: translateX(3px);
+    }
+
+    .sidebar .mini-card {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(204, 95, 39, 0.12), rgba(255, 255, 255, 0.7));
+      border: 1px solid rgba(204, 95, 39, 0.14);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    main {
+      display: grid;
+      gap: 22px;
+    }
+
+    .section {
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 14px 36px rgba(50, 35, 24, 0.08);
+      animation: rise 1.15s ease both;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .section-header p {
+      margin: 10px 0 0;
+      max-width: 56ch;
+      color: var(--muted);
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--teal-soft);
+      color: var(--teal);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(77, 54, 34, 0.1);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(251, 244, 236, 0.88));
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .tree-map {
+      margin: 0;
+      padding: 22px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(15, 109, 109, 0.16);
+      background: linear-gradient(180deg, rgba(15, 109, 109, 0.08), rgba(255, 255, 255, 0.74));
+      overflow-x: auto;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #173535;
+    }
+
+    .insights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .insight {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(36, 107, 69, 0.18);
+      background: linear-gradient(180deg, rgba(36, 107, 69, 0.08), rgba(255, 255, 255, 0.86));
+    }
+
+    .insight strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--good);
+      font-size: 1rem;
+    }
+
+    .comparison {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      background: var(--panel-strong);
+      box-shadow: inset 0 0 0 1px rgba(77, 54, 34, 0.09);
+    }
+
+    .comparison th,
+    .comparison td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(77, 54, 34, 0.08);
+      vertical-align: top;
+    }
+
+    .comparison th {
+      font-size: 0.92rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(204, 95, 39, 0.08);
+    }
+
+    .comparison tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    .badge.good {
+      color: var(--good);
+      background: rgba(36, 107, 69, 0.12);
+    }
+
+    .badge.warn {
+      color: var(--accent-strong);
+      background: rgba(204, 95, 39, 0.12);
+    }
+
+    .badge.bad {
+      color: var(--bad);
+      background: rgba(163, 54, 54, 0.12);
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(77, 54, 34, 0.09);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .list li strong {
+      color: var(--ink);
+    }
+
+    .myth-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .myth {
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(163, 54, 54, 0.14);
+      background: linear-gradient(180deg, rgba(163, 54, 54, 0.08), rgba(255, 255, 255, 0.82));
+    }
+
+    .myth span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 20px, 1200px);
+        padding-top: 18px;
+      }
+
+      .hero,
+      .section,
+      .sidebar {
+        padding: 22px;
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .comparison th,
+      .comparison td {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero" id="top">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">C++ • Competitive Programming • Struktury Danych</div>
+          <h1>Krajobraz struktur danych bez chaosu</h1>
+          <p>
+            Jedna strona, która zbiera w całość mapy, sety, drzewa, sekwencje i ich praktyczne
+            zastosowania w CP. Zamiast przypadkowej listy pojęć masz tu ogląd całego horyzontu:
+            czym są rodziny struktur, gdzie wpadają kontenery STL i które z nich naprawdę warto
+            znać na start.
+          </p>
+          <div class="quick-links">
+            <a href="#rodziny">Rodziny struktur</a>
+            <a href="#sekwencje">Sekwencje</a>
+            <a href="#drzewa">Drzewa</a>
+            <a href="#mapy">Mapy i sety</a>
+            <a href="#cp">Must-have do CP</a>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat-card">
+            <strong>O(1)</strong>
+            Średni koszt dla <code>unordered_map</code> i hash-based struktur.
+          </div>
+          <div class="stat-card">
+            <strong>O(log n)</strong>
+            Charakterystyczna gwarancja dla zbalansowanych BST, np. RB-tree.
+          </div>
+          <div class="stat-card">
+            <strong>vector first</strong>
+            W praktyce bardzo często wygrywa dzięki cache locality.
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Szybka nawigacja</h2>
+        <nav>
+          <a href="#rodziny">1. Rodziny struktur</a>
+          <a href="#hash">2. Hashmapy</a>
+          <a href="#rb-tree">3. RB-tree</a>
+          <a href="#sekwencje">4. Sequence containers</a>
+          <a href="#deque">5. vector vs deque vs list</a>
+          <a href="#drzewa">6. Typy drzew</a>
+          <a href="#mapy">7. Mapy i sety</a>
+          <a href="#cp">8. Najważniejsze do CP</a>
+          <a href="#mity">9. Mity i poprawki</a>
+        </nav>
+        <div class="mini-card">
+          Najkrótsza intuicja: <strong>vector</strong> to domyślny wybór, <strong>deque</strong> bierzesz
+          gdy naprawdę potrzebujesz <code>push_front</code>, a <strong>list</strong> prawie nigdy nie jest
+          najlepszym ruchem w CP.
+        </div>
+      </aside>
+
+      <main>
+        <section class="section" id="rodziny">
+          <div class="section-header">
+            <div>
+              <div class="pill">Mapa wysokiego poziomu</div>
+              <h2>Główne rodziny struktur danych</h2>
+              <p>
+                To najważniejszy poziom orientacji: zanim przejdziesz do konkretnych klas STL,
+                dobrze wiedzieć, do jakiej rodziny w ogóle należą.
+              </p>
+            </div>
+          </div>
+
+          <pre class="tree-map">Data Structures
+├── Arrays / Sequences
+│   ├── array
+│   ├── vector
+│   ├── deque
+│   ├── list
+│   └── forward_list
+├── Hash-based
+│   ├── unordered_map
+│   └── unordered_set
+├── Trees
+│   ├── BST family
+│   │   ├── RB-tree
+│   │   ├── AVL
+│   │   ├── Treap
+│   │   └── Splay
+│   ├── B-tree family
+│   │   ├── B-tree
+│   │   └── B+ tree
+│   └── CP trees
+│       ├── Segment tree
+│       ├── Fenwick tree
+│       └── Trie
+├── Heaps
+│   └── priority_queue
+├── Graph-based
+└── Specialized
+    └── DSU / Union-Find</pre>
+        </section>
+
+        <section class="section" id="hash">
+          <div class="section-header">
+            <div>
+              <div class="pill">Hash-based</div>
+              <h2>Hashmapy w programowaniu konkursowym</h2>
+              <p>
+                W praktyce najczęściej wybierasz między szybkością średnią a gwarancją porządku i
+                stabilnej złożoności.
+              </p>
+            </div>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <h3><code>unordered_map</code></h3>
+              <p>Średnio <strong>O(1)</strong>. Domyślny wybór, gdy potrzebujesz szybkiego dostępu po kluczu.</p>
+            </article>
+            <article class="card">
+              <h3><code>map</code></h3>
+              <p><strong>O(log n)</strong>. Uporządkowane klucze, zwykle implementacja oparta o RB-tree.</p>
+            </article>
+            <article class="card">
+              <h3>Własna hashmapa</h3>
+              <p>Rzadko potrzebna. Sensowny wyjątek to <strong>custom hash</strong>, np. <code>splitmix64</code>.</p>
+            </article>
+            <article class="card">
+              <h3>Praktyczny warning</h3>
+              <p><code>unordered_map</code> może być hackowany na testach, więc czasem warto dodać lepszy hash.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="rb-tree">
+          <div class="section-header">
+            <div>
+              <div class="pill">Zbalansowane BST</div>
+              <h2>RB-tree, czyli co siedzi pod <code>map</code> i <code>set</code></h2>
+              <p>
+                Red-Black Tree to klasyczne zbalansowane drzewo BST. Nie musi być idealnie równe,
+                ale pilnuje, by wysokość nie uciekła za bardzo.
+              </p>
+            </div>
+          </div>
+
+          <div class="insights">
+            <div class="insight">
+              <strong>Typ</strong>
+              Zbalansowane drzewo BST z kolorami i rotacjami.
+            </div>
+            <div class="insight">
+              <strong>Gwarancja</strong>
+              <code>insert</code>, <code>erase</code> i <code>find</code> w <strong>O(log n)</strong>.
+            </div>
+            <div class="insight">
+              <strong>W STL</strong>
+              Najczęściej kojarzysz je przez <code>map</code>, <code>set</code>, <code>multimap</code> i <code>multiset</code>.
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="sekwencje">
+          <div class="section-header">
+            <div>
+              <div class="pill">Arrays / Sequences</div>
+              <h2>Sequence containers w C++</h2>
+              <p>
+                To jedna rodzina, ale różne kompromisy. Nie wszystko, co wygląda na listę elementów,
+                działa tak samo pod spodem.
+              </p>
+            </div>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <h3><code>array</code></h3>
+              <p>Stały rozmiar, składniowo wygodniejsza wersja tablicy o rozmiarze znanym w compile-time.</p>
+            </article>
+            <article class="card">
+              <h3><code>vector</code></h3>
+              <p>Najczęściej najlepszy wybór. Ciągła pamięć, szybki dostęp, dobra lokalność cache.</p>
+            </article>
+            <article class="card">
+              <h3><code>deque</code></h3>
+              <p>Sekwencja o blokowej pamięci. Ma random access, ale nie jest jednym ciągłym buforem.</p>
+            </article>
+            <article class="card">
+              <h3><code>list</code> / <code>forward_list</code></h3>
+              <p>Linked listy. Dobre do lokalnych operacji na iteratorach, słabe do typowego CP.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="deque">
+          <div class="section-header">
+            <div>
+              <div class="pill">Kluczowe porównanie</div>
+              <h2><code>vector</code> vs <code>deque</code> vs <code>list</code></h2>
+              <p>
+                Tu pojawia się najwięcej nieporozumień. <code>deque</code> nie jest listą, a <code>list</code>
+                nie daje szybkiego dostępu po indeksie.
+              </p>
+            </div>
+          </div>
+
+          <table class="comparison">
+            <thead>
+              <tr>
+                <th>Cecha</th>
+                <th><code>vector</code></th>
+                <th><code>deque</code></th>
+                <th><code>list</code></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pamięć</td>
+                <td>Ciągła</td>
+                <td>Blokowa</td>
+                <td>Węzły + wskaźniki</td>
+              </tr>
+              <tr>
+                <td>Dostęp <code>a[i]</code></td>
+                <td><span class="badge good">O(1)</span></td>
+                <td><span class="badge good">O(1)</span></td>
+                <td><span class="badge bad">O(n)</span></td>
+              </tr>
+              <tr>
+                <td><code>push_back</code></td>
+                <td><span class="badge good">O(1)*</span></td>
+                <td><span class="badge good">O(1)</span></td>
+                <td><span class="badge good">O(1)</span></td>
+              </tr>
+              <tr>
+                <td><code>push_front</code></td>
+                <td><span class="badge bad">O(n)</span></td>
+                <td><span class="badge good">O(1)</span></td>
+                <td><span class="badge good">O(1)</span></td>
+              </tr>
+              <tr>
+                <td>Cache locality</td>
+                <td><span class="badge good">Najlepsza</span></td>
+                <td><span class="badge warn">Średnia</span></td>
+                <td><span class="badge bad">Słaba</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <ul class="list" style="margin-top: 14px;">
+            <li><strong><code>deque</code></strong> jest sequence containerem, nie linked listą.</li>
+            <li><strong><code>deque</code></strong> daje random access <code>O(1)</code>, ale zwykle jest wolniejszy od <code>vector</code>.</li>
+            <li><strong><code>list</code></strong> ma szybkie wstawianie i usuwanie tylko wtedy, gdy już masz iterator do miejsca operacji.</li>
+          </ul>
+        </section>
+
+        <section class="section" id="drzewa">
+          <div class="section-header">
+            <div>
+              <div class="pill">Trees</div>
+              <h2>Jak rozumieć różne rodziny drzew</h2>
+              <p>
+                Słowo "drzewo" obejmuje bardzo różne struktury. Warto odróżniać te, które służą do
+                porządku kluczy, od tych zbudowanych pod konkretne operacje w algorytmice.
+              </p>
+            </div>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <h3>BST family</h3>
+              <p><strong>RB-tree</strong>, <strong>AVL</strong>, <strong>Treap</strong>, <strong>Splay</strong>. Służą do utrzymania uporządkowanych danych.</p>
+            </article>
+            <article class="card">
+              <h3>B-tree family</h3>
+              <p><strong>B-tree</strong> i <strong>B+ tree</strong>. Typowo bazy danych i systemy plików, rzadko CP.</p>
+            </article>
+            <article class="card">
+              <h3>Drzewa CP</h3>
+              <p><strong>Segment tree</strong>, <strong>Fenwick tree</strong>, <strong>Trie</strong>. Powstają pod konkretne zapytania i aktualizacje.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="mapy">
+          <div class="section-header">
+            <div>
+              <div class="pill">Associative containers</div>
+              <h2>Mapy i sety: ordered vs unordered</h2>
+              <p>
+                Najprostszy podział: albo struktura trzyma porządek, albo stawia na średnią szybkość
+                hashowania.
+              </p>
+            </div>
+          </div>
+
+          <table class="comparison">
+            <thead>
+              <tr>
+                <th>Rodzaj</th>
+                <th>Kontenery</th>
+                <th>Mechanizm</th>
+                <th>Typowa złożoność</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ordered</td>
+                <td><code>map</code>, <code>set</code>, <code>multimap</code>, <code>multiset</code></td>
+                <td>RB-tree</td>
+                <td><code>O(log n)</code></td>
+              </tr>
+              <tr>
+                <td>Unordered</td>
+                <td><code>unordered_map</code>, <code>unordered_set</code></td>
+                <td>Hash table</td>
+                <td>Średnio <code>O(1)</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="section" id="cp">
+          <div class="section-header">
+            <div>
+              <div class="pill">Praktyka</div>
+              <h2>Najważniejsze struktury do Competitive Programming</h2>
+              <p>
+                Jeśli chcesz mieć sensowny start, nie musisz znać wszystkiego naraz. Najpierw opanuj
+                zestaw, który naprawdę pojawia się w zadaniach.
+              </p>
+            </div>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <h3>Must-have</h3>
+              <p><code>vector</code>, <code>unordered_map</code>, <code>map</code>, <code>set</code>, <code>priority_queue</code>, <code>DSU</code>.</p>
+            </article>
+            <article class="card">
+              <h3>Next level</h3>
+              <p><code>segment tree</code>, <code>fenwick tree</code>, <code>trie</code>.</p>
+            </article>
+            <article class="card">
+              <h3>Praktyczny default</h3>
+              <p>Najpierw pytaj: czy zwykły <code>vector</code> albo <code>sort</code> nie wystarczy?</p>
+            </article>
+          </div>
+
+          <div class="insights" style="margin-top: 14px;">
+            <div class="insight">
+              <strong>STL ponad custom code</strong>
+              W większości przypadków gotowe struktury STL są lepsze niż ręczne implementacje.
+            </div>
+            <div class="insight">
+              <strong>Cache robi różnicę</strong>
+              Teoretycznie podobne struktury mogą zachowywać się bardzo różnie w praktyce.
+            </div>
+            <div class="insight">
+              <strong>Dobieraj narzędzie do operacji</strong>
+              Najpierw wypisz, jakie operacje i złożoności są potrzebne, dopiero potem wybieraj strukturę.
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="mity">
+          <div class="section-header">
+            <div>
+              <div class="pill">Wyprostowane założenia</div>
+              <h2>Najczęstsze mity</h2>
+              <p>
+                To te trzy pomyłki najczęściej psują intuicję, gdy ktoś pierwszy raz ogląda cały
+                krajobraz STL i drzew.
+              </p>
+            </div>
+          </div>
+
+          <div class="myth-grid">
+            <div class="myth">
+              <strong>Mit: <code>list</code> ma dostęp <code>O(1)</code></strong>
+              <span>Nie. Dostęp po pozycji jest <code>O(n)</code>, bo trzeba iść po wskaźnikach.</span>
+            </div>
+            <div class="myth">
+              <strong>Mit: <code>deque</code> to lista</strong>
+              <span>Nie. To sequence container z blokową pamięcią i random access.</span>
+            </div>
+            <div class="myth">
+              <strong>Mit: <code>deque</code> ma dostęp <code>O(n)</code></strong>
+              <span>Nie. Ma <code>O(1)</code>, choć zwykle przegrywa z <code>vector</code> na cache.</span>
+            </div>
+          </div>
+
+          <p class="footer-note">
+            TL;DR: <strong>vector</strong> jest zwykle najszybszy w praktyce, <strong>deque</strong> wybierasz
+            pod <code>push_front</code>, <strong>list</strong> prawie nigdy nie jest pierwszym wyborem,
+            <strong>map</strong> opiera się o RB-tree, a <strong>unordered_map</strong> daje średnio
+            <code>O(1)</code>, ale czasem wymaga custom hasha.
+          </p>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

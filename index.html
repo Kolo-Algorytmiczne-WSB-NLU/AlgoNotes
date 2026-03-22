@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorytms - Struktury Danych i Złożoności</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a class="active" href="index.html">Start</a>
+        <a href="structures.html">Struktury danych</a>
+        <a href="complexities.html">Złożoności</a>
+        <a href="index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Konspekt do nauki C++ i CP</div>
+      <h1>Dwie osobne ścieżki: struktury danych i złożoności</h1>
+      <p>
+        Rozdzieliłem materiał na dwie podstrony, żeby łatwiej było budować intuicję. Jedna
+        prowadzi po rodzinach struktur zgodnie z drzewem kategorii, a druga zbiera najważniejsze
+        klasy złożoności obliczeniowej i przykłady, gdzie je spotykasz.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="structures.html">Otwórz struktury danych</a>
+        <a class="button" href="complexities.html">Otwórz złożoności</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <div class="tag">Jak czytać tę wersję</div>
+        <h2 class="mt-14">Układ ma charakter konspektu</h2>
+        <p class="section-intro">
+          Na stronie o strukturach nagłówki pokazują zależności rodzina -> podrodzina -> konkretna
+          struktura. Dzięki temu od razu widać, że <code>array</code> należy do
+          <code>Arrays / Sequences</code>, a <code>RB-tree</code> siedzi w <code>BST family</code>,
+          która z kolei jest częścią <code>Trees</code>.
+        </p>
+      </section>
+
+      <div class="card-grid">
+        <article class="card">
+          <div class="tag">Podstrona 1</div>
+          <h3 class="mt-12">Struktury danych</h3>
+          <p>
+            Przejście po rodzinach w kolejności z grafu: sekwencje, hash-based, trees, heaps,
+            graph-based i specialized.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="structures.html">Przejdź</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="tag gold">Podstrona 2</div>
+          <h3 class="mt-12">Złożoności obliczeniowe</h3>
+          <p>
+            Krótkie wyjaśnienia klas typu <code>O(1)</code>, <code>O(log n)</code>,
+            <code>O(n)</code> czy <code>O(n log n)</code> z praktycznymi przykładami.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="complexities.html">Przejdź</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

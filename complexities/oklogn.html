@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(k log n) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(k log n)</code></h1>
+      <p>
+        Ten koszt pojawia się, gdy wykonujesz operację logarytmiczną wiele razy. Klasyczny przykład
+        to top K elements albo kilka binary searchy na dużej strukturze.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(k log n)</code></p>
+        <div class="tag">Najkrótsza intuicja</div>
+        <h2 class="mt-14">K razy coś logarytmicznego</h2>
+        <p class="section-intro">
+          Najczęściej spotkasz to przy heap push/pop wykonywanym <code>k</code> razy albo przy
+          binary search uruchamianym wielokrotnie dla różnych zapytań.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>top K elements przez heap</li>
+              <li>merge K sorted lists</li>
+              <li>binary search wykonywany K razy</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Praktyczny obraz</h3>
+            <p>
+              Jeśli pojedyncze wyszukanie jest szybkie, ale musisz je zrobić wiele razy, koszt łączny
+              zaczyna zależeć od obu parametrów: <code>k</code> i <code>n</code>.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Typowe limity</h3>
+            <p>
+              Taki koszt bywa komfortowy dla danych rzędu <code>n ≤ 10^6</code>, jeśli
+              <code>k</code> nie jest zbyt duże.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(k log n)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: binary search wykonywany K razy</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdbool.h&gt;
+#include &lt;stdio.h&gt;
+
+bool contains(int arr[], int n, int target) {
+    int left = 0;
+    int right = n - 1;
+
+    while (left &lt;= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return true;
+        if (arr[mid] &lt; target) left = mid + 1;
+        else right = mid - 1;
+    }
+
+    return false;
+}
+
+int main(void) {
+    int arr[] = {1, 4, 7, 10, 13, 18, 22};
+    int queries[] = {7, 18, 2};
+    int n = 7;
+    int k = 3;
+
+    for (int i = 0; i &lt; k; i++) {
+        printf("%d\n", contains(arr, n, queries[i]));
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: K wyszukiwań binarnych</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    std::vector&lt;int&gt; arr = {1, 4, 7, 10, 13, 18, 22};
+    std::vector&lt;int&gt; queries = {7, 18, 2};
+
+    for (int q : queries) {
+        bool found = std::binary_search(arr.begin(), arr.end(), q);
+        std::cout &lt;&lt; found &lt;&lt; '\n';
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: Array.BinarySearch wiele razy</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] values = { 1, 4, 7, 10, 13, 18, 22 };
+        int[] queries = { 7, 18, 2 };
+
+        foreach (int q in queries)
+        {
+            bool found = Array.BinarySearch(values, q) &gt;= 0;
+            Console.WriteLine(found);
+        }
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: bisect dla wielu zapytań</div>
+            <div class="code-shell">
+              <pre><code>from bisect import bisect_left
+
+values = [1, 4, 7, 10, 13, 18, 22]
+queries = [7, 18, 2]
+
+for q in queries:
+    pos = bisect_left(values, q)
+    found = pos &lt; len(values) and values[pos] == q
+    print(found)</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

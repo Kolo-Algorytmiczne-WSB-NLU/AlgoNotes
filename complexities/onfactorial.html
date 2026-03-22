@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(n!) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(n!)</code></h1>
+      <p>
+        To koszt charakterystyczny dla pełnego generowania permutacji. Rośnie ekstremalnie szybko i
+        działa tylko dla bardzo małych wartości <code>n</code>.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(n!)</code></p>
+        <div class="tag gold">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Wszystkie permutacje</h2>
+        <p class="section-intro">
+          Jeśli Twoje rozwiązanie próbuje każdy możliwy układ elementów, niemal na pewno wpadasz w
+          <code>O(n!)</code>. To klasyczny koszt dla permutacji i części zadań backtrackingowych.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>generowanie wszystkich permutacji</li>
+              <li>backtracking po ustawieniach elementów</li>
+              <li>brute force dla bardzo małych danych</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Typowe limity</h3>
+            <p>
+              Zwykle trzeba zostać przy <code>n ≤ 12</code>, a i tak nie zawsze będzie komfortowo.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Ważna uwaga</h3>
+            <p>
+              To jedna z tych klas, które komputer toleruje tylko wtedy, gdy dane wejściowe są naprawdę małe.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(n!)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: permutacje przez swap</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+
+void swap(int* a, int* b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void permute(int arr[], int left, int right) {
+    if (left == right) {
+        for (int i = 0; i &lt;= right; i++) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+        return;
+    }
+
+    for (int i = left; i &lt;= right; i++) {
+        swap(&arr[left], &arr[i]);
+        permute(arr, left + 1, right);
+        swap(&arr[left], &arr[i]);
+    }
+}
+
+int main(void) {
+    int arr[] = {1, 2, 3};
+    permute(arr, 0, 2);
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: backtracking po permutacjach</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+void permute(std::vector&lt;int&gt;&amp; arr, int left) {
+    if (left == static_cast&lt;int&gt;(arr.size())) {
+        for (int x : arr) {
+            std::cout &lt;&lt; x &lt;&lt; ' ';
+        }
+        std::cout &lt;&lt; '\n';
+        return;
+    }
+
+    for (int i = left; i &lt; static_cast&lt;int&gt;(arr.size()); ++i) {
+        std::swap(arr[left], arr[i]);
+        permute(arr, left + 1);
+        std::swap(arr[left], arr[i]);
+    }
+}
+
+int main() {
+    std::vector&lt;int&gt; arr = {1, 2, 3};
+    permute(arr, 0);
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: wszystkie ustawienia tablicy</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static void Permute(int[] arr, int left)
+    {
+        if (left == arr.Length)
+        {
+            Console.WriteLine(string.Join(" ", arr));
+            return;
+        }
+
+        for (int i = left; i &lt; arr.Length; i++)
+        {
+            (arr[left], arr[i]) = (arr[i], arr[left]);
+            Permute(arr, left + 1);
+            (arr[left], arr[i]) = (arr[i], arr[left]);
+        }
+    }
+
+    static void Main()
+    {
+        int[] arr = { 1, 2, 3 };
+        Permute(arr, 0);
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: generator permutacji</div>
+            <div class="code-shell">
+              <pre><code>def permute(arr: list[int], left: int) -&gt; None:
+    if left == len(arr):
+        print(arr)
+        return
+
+    for i in range(left, len(arr)):
+        arr[left], arr[i] = arr[i], arr[left]
+        permute(arr, left + 1)
+        arr[left], arr[i] = arr[i], arr[left]
+
+
+permute([1, 2, 3], 0)</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

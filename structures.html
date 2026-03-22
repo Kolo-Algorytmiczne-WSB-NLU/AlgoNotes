@@ -1,0 +1,1314 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struktury Danych - Konspekt</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="brand">Algorytms</div>
+        <nav class="site-nav" aria-label="Nawigacja główna">
+          <a href="index.html">Start</a>
+          <a class="active" href="structures.html">Struktury danych</a>
+          <a href="complexities.html">Złożoności</a>
+          <a href="index-copy.html">Poprzednia wersja</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <h1>Krajobraz struktur danych</h1>
+      </section>
+
+      <div class="split">
+        <aside class="sidebar">
+          <p class="sidebar-title">Spis treści</p>
+          <nav
+            class="tree-nav"
+            aria-label="Drzewiasta nawigacja po strukturach danych"
+          >
+            <a class="tree-link tree-utility" href="#stl-mapping"
+              >Most do bibliotek</a
+            >
+
+            <a class="tree-link" href="#arrays">Arrays / Sequences</a>
+            <div class="tree-subtree">
+              <a class="tree-link" href="#fixed-array">Fixed-size array</a>
+              <a class="tree-link" href="#dynamic-array">Dynamic array</a>
+              <a class="tree-link" href="#deque">Deque</a>
+              <a class="tree-link" href="#doubly-linked-list"
+                >Doubly linked list</a
+              >
+              <a class="tree-link" href="#singly-linked-list"
+                >Singly linked list</a
+              >
+            </div>
+
+            <a class="tree-link" href="#hash-based">Hash-based</a>
+            <div class="tree-subtree">
+              <a class="tree-link" href="#hash-map">Hash map</a>
+              <a class="tree-link" href="#hash-set">Hash set</a>
+            </div>
+
+            <a class="tree-link" href="#trees">Trees</a>
+            <div class="tree-subtree">
+              <a class="tree-link" href="#bst-family">BST family</a>
+              <div class="tree-subtree">
+                <a class="tree-link" href="#rb-tree">RB-tree</a>
+                <a class="tree-link" href="#avl">AVL tree</a>
+                <a class="tree-link" href="#treap">Treap</a>
+                <a class="tree-link" href="#splay">Splay tree</a>
+              </div>
+
+              <a class="tree-link" href="#b-tree-family">B-tree family</a>
+              <div class="tree-subtree">
+                <a class="tree-link" href="#b-tree">B-tree</a>
+                <a class="tree-link" href="#b-plus-tree">B+ tree</a>
+              </div>
+
+              <a class="tree-link" href="#cp-trees">CP trees</a>
+              <div class="tree-subtree">
+                <a class="tree-link" href="#segment-tree">Segment tree</a>
+                <a class="tree-link" href="#fenwick-tree">Fenwick tree</a>
+                <a class="tree-link" href="#trie">Trie</a>
+              </div>
+            </div>
+
+            <a class="tree-link" href="#heaps">Heaps</a>
+            <div class="tree-subtree">
+              <a class="tree-link" href="#priority-queue">Priority queue</a>
+            </div>
+
+            <a class="tree-link" href="#graph-based">Graph-based</a>
+            <div class="tree-subtree">
+              <a class="tree-link" href="#adjacency-list">Adjacency list</a>
+              <a class="tree-link" href="#adjacency-matrix">Adjacency matrix</a>
+            </div>
+
+            <a class="tree-link" href="#specialized">Specialized</a>
+            <div class="tree-subtree">
+              <a class="tree-link" href="#union-find">Union-Find / DSU</a>
+            </div>
+          </nav>
+          <div class="aside-note">
+            Drzewo po lewej zastępuje dawny blok <code>Data Structures</code>,
+            więc możesz przeskakiwać od razu do konkretnej rodziny albo
+            pojedynczej struktury.
+          </div>
+        </aside>
+
+        <main class="grid">
+          <section class="table-panel" id="stl-mapping">
+            <div class="tag">Most do bibliotek</div>
+            <h2 class="mt-14">
+              Jak ogólne nazwy łączą się z bibliotekami języków
+            </h2>
+            <p class="section-intro">
+              Sama mapa pokazuje rodziny i podrodziny. Ta tabelka łączy ogólne
+              nazwy struktur z przykładami, które najczęściej widzisz w
+              konkretnych językach i bibliotekach.
+            </p>
+            <div class="lang-demo mt-18" data-default="cpp">
+              <div
+                class="lang-toolbar"
+                role="tablist"
+                aria-label="Język przykładów w moście do bibliotek"
+              >
+                <span class="lang-toolbar-title"
+                  >Pokaż przykład deklaracji dla:</span
+                >
+                <button class="lang-button" type="button" data-lang="c">
+                  C
+                </button>
+                <button class="lang-button" type="button" data-lang="cpp">
+                  C++
+                </button>
+                <button class="lang-button" type="button" data-lang="csharp">
+                  C#
+                </button>
+                <button class="lang-button" type="button" data-lang="python">
+                  Python
+                </button>
+              </div>
+
+              <div class="lang-panel" data-lang-panel="c">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ogólna nazwa</th>
+                      <th>Przykład deklaracji</th>
+                      <th>Gdzie wpada na mapie</th>
+                      <th>Krótka intuicja</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/fixed-array.html"
+                          ><code>Fixed-size array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >int values[5] = {1, 2, 3, 4, 5};</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja o stałym rozmiarze i ciągłej pamięci.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/dynamic-array.html"
+                          ><code>Dynamic array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >int* values = malloc(8 * sizeof(int));</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Rosnąca tablica z szybkim dostępem po indeksie.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/deque.html"
+                          ><code>Deque</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >/* zwykle własny ring buffer */</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja z tanim dokładaniem z obu końców.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/doubly-linked-list.html"
+                          ><code>Doubly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >Node* head = NULL; /* doubly linked list */</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Lista z wskaźnikami w przód i w tył.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/singly-linked-list.html"
+                          ><code>Singly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >Node* head = NULL; /* singly linked list */</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Prostsza linked lista idąca tylko do przodu.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-map.html"
+                          ><code>Hash map</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >/* brak hash mapy w standardzie C */</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>Mapowanie klucz -&gt; wartość przez hash table.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-set.html"
+                          ><code>Hash set</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >/* brak hash setu w standardzie C */</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>
+                        Zbiór oparty o hash table, zwykle średnio
+                        <code>O(1)</code>.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered map</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          >/* brak ordered map w standardzie C */</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Mapowanie klucz -&gt; wartość utrzymywane w porządku.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered set</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          >/* brak ordered set w standardzie C */</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Zbiór utrzymywany w porządku, zwykle nad balanced BST.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/priority-queue.html"
+                          ><code>Priority queue</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >/* zwykle własny binary heap */</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Heaps</code></td>
+                      <td>
+                        Szybki dostęp do największego lub najmniejszego
+                        elementu.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/union-find.html"
+                          ><code>Union-Find / DSU</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >int parent[MAXN], size[MAXN];</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Specialized</code></td>
+                      <td>Łączenie zbiorów i pytania o spójność.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="lang-panel" data-lang-panel="cpp" hidden>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ogólna nazwa</th>
+                      <th>Przykład deklaracji</th>
+                      <th>Gdzie wpada na mapie</th>
+                      <th>Krótka intuicja</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/fixed-array.html"
+                          ><code>Fixed-size array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::array&lt;int, 5&gt; values = {1, 2, 3, 4,
+                          5};</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja o stałym rozmiarze i ciągłej pamięci.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/dynamic-array.html"
+                          ><code>Dynamic array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::vector&lt;int&gt; values = {1, 2, 3};</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Rosnąca tablica z szybkim dostępem po indeksie.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/deque.html"
+                          ><code>Deque</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::deque&lt;int&gt; values = {1, 2, 3};</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja z tanim dokładaniem z obu końców.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/doubly-linked-list.html"
+                          ><code>Doubly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::list&lt;int&gt; values = {1, 2, 3};</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Lista z wskaźnikami w przód i w tył.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/singly-linked-list.html"
+                          ><code>Singly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::forward_list&lt;int&gt; values = {1, 2,
+                          3};</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Prostsza linked lista idąca tylko do przodu.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-map.html"
+                          ><code>Hash map</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::unordered_map&lt;std::string, int&gt;
+                          freq;</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>Mapowanie klucz -&gt; wartość przez hash table.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-set.html"
+                          ><code>Hash set</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::unordered_set&lt;int&gt; seen = {1, 2, 3};</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>
+                        Zbiór oparty o hash table, zwykle średnio
+                        <code>O(1)</code>.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered map</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::map&lt;int, int&gt; freq;</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Mapowanie klucz -&gt; wartość utrzymywane w porządku.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered set</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::set&lt;int&gt; seen = {1, 2, 3};</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Zbiór utrzymywany w porządku, zwykle nad balanced BST.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/priority-queue.html"
+                          ><code>Priority queue</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::priority_queue&lt;int&gt; pq;</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Heaps</code></td>
+                      <td>
+                        Szybki dostęp do największego lub najmniejszego
+                        elementu.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/union-find.html"
+                          ><code>Union-Find / DSU</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >std::vector&lt;int&gt; parent(n), size(n, 1);</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Specialized</code></td>
+                      <td>Łączenie zbiorów i pytania o spójność.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="lang-panel" data-lang-panel="csharp" hidden>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ogólna nazwa</th>
+                      <th>Przykład deklaracji</th>
+                      <th>Gdzie wpada na mapie</th>
+                      <th>Krótka intuicja</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/fixed-array.html"
+                          ><code>Fixed-size array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >int[] values = { 1, 2, 3, 4, 5 };</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja o stałym rozmiarze i ciągłej pamięci.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/dynamic-array.html"
+                          ><code>Dynamic array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >List&lt;int&gt; values = new() { 1, 2, 3 };</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Rosnąca tablica z szybkim dostępem po indeksie.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/deque.html"
+                          ><code>Deque</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >// brak deque w standardowej bibliotece</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja z tanim dokładaniem z obu końców.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/doubly-linked-list.html"
+                          ><code>Doubly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >LinkedList&lt;int&gt; values = new(new[] { 1, 2, 3
+                          });</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Lista z wskaźnikami w przód i w tył.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/singly-linked-list.html"
+                          ><code>Singly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >// brak singly linked list w standardowej
+                          bibliotece</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Prostsza linked lista idąca tylko do przodu.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-map.html"
+                          ><code>Hash map</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >Dictionary&lt;string, int&gt; freq = new();</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>Mapowanie klucz -&gt; wartość przez hash table.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-set.html"
+                          ><code>Hash set</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >HashSet&lt;int&gt; seen = new() { 1, 2, 3 };</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>
+                        Zbiór oparty o hash table, zwykle średnio
+                        <code>O(1)</code>.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered map</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          >SortedDictionary&lt;int, int&gt; freq = new();</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Mapowanie klucz -&gt; wartość utrzymywane w porządku.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered set</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          >SortedSet&lt;int&gt; seen = new() { 1, 2, 3 };</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Zbiór utrzymywany w porządku, zwykle nad balanced BST.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/priority-queue.html"
+                          ><code>Priority queue</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >PriorityQueue&lt;int, int&gt; pq = new();</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Heaps</code></td>
+                      <td>
+                        Szybki dostęp do największego lub najmniejszego
+                        elementu.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/union-find.html"
+                          ><code>Union-Find / DSU</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >int[] parent = new int[n], size = new int[n];</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Specialized</code></td>
+                      <td>Łączenie zbiorów i pytania o spójność.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="lang-panel" data-lang-panel="python" hidden>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ogólna nazwa</th>
+                      <th>Przykład deklaracji</th>
+                      <th>Gdzie wpada na mapie</th>
+                      <th>Krótka intuicja</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/fixed-array.html"
+                          ><code>Fixed-size array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >values = (1, 2, 3, 4, 5) # najbliżej fixed-size</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja o stałym rozmiarze i ciągłej pamięci.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/dynamic-array.html"
+                          ><code>Dynamic array</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code">values = [1, 2, 3]</code>
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Rosnąca tablica z szybkim dostępem po indeksie.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/deque.html"
+                          ><code>Deque</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >from collections import deque; values = deque([1, 2,
+                          3])</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Sekwencja z tanim dokładaniem z obu końców.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/doubly-linked-list.html"
+                          ><code>Doubly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >head = None # brak doubly linked list w
+                          standardzie</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Lista z wskaźnikami w przód i w tył.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/singly-linked-list.html"
+                          ><code>Singly linked list</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >head = None # brak singly linked list w
+                          standardzie</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Arrays / Sequences</code></td>
+                      <td>Prostsza linked lista idąca tylko do przodu.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-map.html"
+                          ><code>Hash map</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >freq = {"ala": 2, "kot": 1}</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>Mapowanie klucz -&gt; wartość przez hash table.</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/hash-set.html"
+                          ><code>Hash set</code></a
+                        >
+                      </td>
+                      <td><code class="bridge-code">seen = {1, 2, 3}</code></td>
+                      <td><code>Data Structures / Hash-based</code></td>
+                      <td>
+                        Zbiór oparty o hash table, zwykle średnio
+                        <code>O(1)</code>.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered map</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          ># brak ordered map w standardzie</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Mapowanie klucz -&gt; wartość utrzymywane w porządku.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><code>Ordered set</code></td>
+                      <td>
+                        <code class="bridge-code"
+                          ># brak ordered set w standardzie</code
+                        >
+                      </td>
+                      <td>
+                        <code
+                          >Data Structures / Trees / BST family / RB-tree</code
+                        >
+                      </td>
+                      <td>
+                        Zbiór utrzymywany w porządku, zwykle nad balanced BST.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a
+                          class="inline-link"
+                          href="structures/priority-queue.html"
+                          ><code>Priority queue</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >heap = [] # z modułem heapq</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Heaps</code></td>
+                      <td>
+                        Szybki dostęp do największego lub najmniejszego
+                        elementu.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a class="inline-link" href="structures/union-find.html"
+                          ><code>Union-Find / DSU</code></a
+                        >
+                      </td>
+                      <td>
+                        <code class="bridge-code"
+                          >parent = list(range(n)); size = [1] * n</code
+                        >
+                      </td>
+                      <td><code>Data Structures / Specialized</code></td>
+                      <td>Łączenie zbiorów i pytania o spójność.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="family-block" id="arrays">
+            <p class="path">Data Structures / Arrays / Sequences</p>
+            <h2>Arrays / Sequences</h2>
+            <p>
+              To rodzina struktur przechowujących elementy w pewnej kolejności.
+              W praktyce większość codziennej pracy na danych zaczyna się
+              właśnie tutaj.
+            </p>
+
+            <div class="leaf-grid">
+              <article class="leaf" id="fixed-array">
+                <h3>
+                  <a class="inline-link" href="structures/fixed-array.html"
+                    >Fixed-size array</a
+                  >
+                </h3>
+                <p>
+                  Ogólna nazwa dla tablic o stałym rozmiarze, np. C-owych tablic
+                  i <code>std::array</code>. Dobre, gdy rozmiar znasz z góry.
+                </p>
+                <ul>
+                  <li>należy do: <code>Arrays / Sequences</code></li>
+                  <li>mocna strona: przewidywalność i prostota</li>
+                </ul>
+              </article>
+
+              <article class="leaf" id="dynamic-array">
+                <h3>
+                  <a class="inline-link" href="structures/dynamic-array.html"
+                    >Dynamic array</a
+                  >
+                </h3>
+                <p>
+                  Ogólna kategoria, do której należą m.in. C++
+                  <code>vector</code>, C# <code>List&lt;T&gt;</code> i Java
+                  <code>ArrayList</code>. Ciągła pamięć i świetna lokalność
+                  cache.
+                </p>
+                <ul>
+                  <li>należy do: <code>Arrays / Sequences</code></li>
+                  <li>
+                    typowo: szybki dostęp po indeksie i <code>append</code>
+                  </li>
+                </ul>
+              </article>
+
+              <article class="leaf" id="deque">
+                <h3>
+                  <a class="inline-link" href="structures/deque.html">Deque</a>
+                </h3>
+                <p>
+                  Double-ended queue z blokową pamięcią. Daje random access, ale
+                  nie jest linked listą.
+                </p>
+                <ul>
+                  <li>należy do: <code>Arrays / Sequences</code></li>
+                  <li>typowo: gdy potrzebujesz także <code>prepend</code></li>
+                </ul>
+              </article>
+
+              <article class="leaf" id="doubly-linked-list">
+                <h3>
+                  <a
+                    class="inline-link"
+                    href="structures/doubly-linked-list.html"
+                    >Doubly linked list</a
+                  >
+                </h3>
+                <p>
+                  Dwukierunkowa linked list. W C++ odpowiada jej zwykle
+                  <code>list</code>, w C# <code>LinkedList&lt;T&gt;</code>.
+                </p>
+                <ul>
+                  <li>należy do: <code>Arrays / Sequences</code></li>
+                  <li>uwaga: brak random access</li>
+                </ul>
+              </article>
+
+              <article class="leaf" id="singly-linked-list">
+                <h3>
+                  <a
+                    class="inline-link"
+                    href="structures/singly-linked-list.html"
+                    >Singly linked list</a
+                  >
+                </h3>
+                <p>
+                  Jednokierunkowa linked list, np. C++
+                  <code>forward_list</code>. Jeszcze prostsza i lżejsza niż
+                  wersja dwukierunkowa.
+                </p>
+                <ul>
+                  <li>należy do: <code>Arrays / Sequences</code></li>
+                  <li>typowo: rzadko używana w CP</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="family-block" id="hash-based">
+            <p class="path">Data Structures / Hash-based</p>
+            <h2>Hash-based</h2>
+            <p>
+              Ta rodzina stawia na szybkie wyszukiwanie po kluczu dzięki
+              hashowaniu. W praktyce często chodzi o średni czas
+              <code>O(1)</code>.
+            </p>
+
+            <div class="leaf-grid">
+              <article class="leaf" id="hash-map">
+                <h3>
+                  <a class="inline-link" href="structures/hash-map.html"
+                    >Hash map</a
+                  >
+                </h3>
+                <p>
+                  Ogólna nazwa dla struktur typu C++ <code>unordered_map</code>,
+                  C# <code>Dictionary&lt;TKey, TValue&gt;</code> i Python
+                  <code>dict</code>.
+                </p>
+                <ul>
+                  <li>należy do: <code>Hash-based</code></li>
+                  <li>uwaga: w CP czasem dodaje się custom hash</li>
+                </ul>
+              </article>
+
+              <article class="leaf" id="hash-set">
+                <h3>
+                  <a class="inline-link" href="structures/hash-set.html"
+                    >Hash set</a
+                  >
+                </h3>
+                <p>
+                  Zbiór oparty o hash table, np. C++ <code>unordered_set</code>,
+                  C# <code>HashSet&lt;T&gt;</code> i Python <code>set</code>.
+                </p>
+                <ul>
+                  <li>należy do: <code>Hash-based</code></li>
+                  <li>typowo: membership test bez utrzymywania kolejności</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="family-block" id="trees">
+            <p class="path">Data Structures / Trees</p>
+            <h2>Trees</h2>
+            <p>
+              Tu zaczynają się podrodziny. Nie każde drzewo służy do tego
+              samego: jedne pilnują porządku kluczy, inne wspierają specyficzne
+              operacje na przedziałach lub prefiksach.
+            </p>
+
+            <section class="family-block" id="bst-family">
+              <p class="path">Data Structures / Trees / BST family</p>
+              <h3>BST family</h3>
+              <p>
+                To drzewa wyszukiwań binarnych. Utrzymują relację lewy mniejszy,
+                prawy większy, a różne warianty balansują drzewo na różne
+                sposoby.
+              </p>
+
+              <div class="leaf-grid">
+                <article class="leaf" id="rb-tree">
+                  <p class="path">
+                    Data Structures / Trees / BST family / RB-tree
+                  </p>
+                  <h4>
+                    <a class="inline-link" href="structures/rb-tree.html"
+                      >RB-tree</a
+                    >
+                  </h4>
+                  <p>
+                    Zbalansowane BST używane typowo pod <code>map</code> i
+                    <code>set</code>.
+                  </p>
+                </article>
+
+                <article class="leaf" id="avl">
+                  <p class="path">Data Structures / Trees / BST family / AVL</p>
+                  <h4>
+                    <a class="inline-link" href="structures/avl-tree.html"
+                      >AVL tree</a
+                    >
+                  </h4>
+                  <p>
+                    Mocniej pilnuje wysokości niż RB-tree, często kosztem
+                    większej liczby rotacji.
+                  </p>
+                </article>
+
+                <article class="leaf" id="treap">
+                  <p class="path">
+                    Data Structures / Trees / BST family / Treap
+                  </p>
+                  <h4>
+                    <a class="inline-link" href="structures/treap.html"
+                      >Treap</a
+                    >
+                  </h4>
+                  <p>
+                    Łączy porządek BST z losowym priorytetem. Popularny w
+                    edukacyjnych implementacjach.
+                  </p>
+                </article>
+
+                <article class="leaf" id="splay">
+                  <p class="path">
+                    Data Structures / Trees / BST family / Splay
+                  </p>
+                  <h4>
+                    <a class="inline-link" href="structures/splay-tree.html"
+                      >Splay tree</a
+                    >
+                  </h4>
+                  <p>
+                    Przesuwa często używane elementy bliżej korzenia przez
+                    operację splay.
+                  </p>
+                </article>
+              </div>
+            </section>
+
+            <section class="family-block" id="b-tree-family">
+              <p class="path">Data Structures / Trees / B-tree family</p>
+              <h3>B-tree family</h3>
+              <p>
+                Rodzina drzew wielodrogowych, projektowana pod pracę z pamięcią
+                masową i blokami dyskowymi. Klasyczna domena to bazy danych i
+                systemy plików.
+              </p>
+
+              <div class="leaf-grid">
+                <article class="leaf" id="b-tree">
+                  <p class="path">
+                    Data Structures / Trees / B-tree family / B-tree
+                  </p>
+                  <h4>
+                    <a class="inline-link" href="structures/b-tree.html"
+                      >B-tree</a
+                    >
+                  </h4>
+                  <p>
+                    Przechowuje klucze i dzieci wewnątrz jednego węzła,
+                    minimalizując liczbę odwołań.
+                  </p>
+                </article>
+
+                <article class="leaf" id="b-plus-tree">
+                  <p class="path">
+                    Data Structures / Trees / B-tree family / B+ tree
+                  </p>
+                  <h4>
+                    <a class="inline-link" href="structures/b-plus-tree.html"
+                      >B+ tree</a
+                    >
+                  </h4>
+                  <p>
+                    Wariant, w którym dane zwykle lądują w liściach, a liście są
+                    połączone sekwencyjnie.
+                  </p>
+                </article>
+              </div>
+            </section>
+
+            <section class="family-block" id="cp-trees">
+              <p class="path">Data Structures / Trees / CP trees</p>
+              <h3>CP trees</h3>
+              <p>
+                To grupa drzew kojarzonych bardziej z algorytmiką i zadaniami
+                niż z ogólnymi kontenerami standardowych bibliotek. Zwykle
+                odpowiadają na konkretne typy zapytań.
+              </p>
+
+              <div class="leaf-grid">
+                <article class="leaf" id="segment-tree">
+                  <p class="path">
+                    Data Structures / Trees / CP trees / Segment tree
+                  </p>
+                  <h4>
+                    <a class="inline-link" href="structures/segment-tree.html"
+                      >Segment tree</a
+                    >
+                  </h4>
+                  <p>Drzewo do zapytań i aktualizacji na przedziałach.</p>
+                </article>
+
+                <article class="leaf" id="fenwick-tree">
+                  <p class="path">
+                    Data Structures / Trees / CP trees / Fenwick tree
+                  </p>
+                  <h4>
+                    <a class="inline-link" href="structures/fenwick-tree.html"
+                      >Fenwick tree</a
+                    >
+                  </h4>
+                  <p>
+                    Lżejsza struktura do sum prefiksowych i wybranych
+                    aktualizacji.
+                  </p>
+                </article>
+
+                <article class="leaf" id="trie">
+                  <p class="path">Data Structures / Trees / CP trees / Trie</p>
+                  <h4>
+                    <a class="inline-link" href="structures/trie.html">Trie</a>
+                  </h4>
+                  <p>
+                    Drzewo prefiksowe przydatne zwłaszcza dla stringów i
+                    słowników.
+                  </p>
+                </article>
+              </div>
+            </section>
+          </section>
+
+          <section class="family-block" id="heaps">
+            <p class="path">Data Structures / Heaps</p>
+            <h2>Heaps</h2>
+            <p>
+              Heapy są zbudowane pod szybki dostęp do minimum lub maksimum, a
+              nie pod pełny porządek wszystkich elementów.
+            </p>
+
+            <div class="leaf-grid">
+              <article class="leaf" id="priority-queue">
+                <h3>
+                  <a class="inline-link" href="structures/priority-queue.html"
+                    >Priority queue</a
+                  >
+                </h3>
+                <p>
+                  Abstrakcyjna kolejka priorytetowa. W C++ zwykle używasz
+                  <code>priority_queue</code>, w Javie
+                  <code>PriorityQueue</code>.
+                </p>
+                <ul>
+                  <li>należy do: <code>Heaps</code></li>
+                  <li>
+                    typowo: pobieranie największego lub najmniejszego elementu
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="family-block" id="graph-based">
+            <p class="path">Data Structures / Graph-based</p>
+            <h2>Graph-based</h2>
+            <p>
+              To bardziej rodzina reprezentacji niż jeden konkretny kontener
+              standardowej biblioteki. Gdy problem opisuje wierzchołki i
+              krawędzie, zwykle pracujesz na strukturach grafowych.
+            </p>
+
+            <div class="card-grid">
+              <article class="card" id="adjacency-list">
+                <h3>
+                  <a class="inline-link" href="structures/adjacency-list.html"
+                    >Adjacency list</a
+                  >
+                </h3>
+                <p>
+                  Najczęstsza reprezentacja w CP, zwykle jako lista sąsiedztwa
+                  oparta o sekwencje lub jako lista krawędzi.
+                </p>
+              </article>
+
+              <article class="card" id="adjacency-matrix">
+                <h3>
+                  <a class="inline-link" href="structures/adjacency-matrix.html"
+                    >Adjacency matrix</a
+                  >
+                </h3>
+                <p>
+                  Prostsza koncepcyjnie, ale pamięciowo droższa. Dobra raczej
+                  dla małych grafów.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section class="family-block" id="specialized">
+            <p class="path">Data Structures / Specialized</p>
+            <h2>Specialized</h2>
+            <p>
+              Tu trafiają struktury projektowane pod bardzo konkretny typ
+              operacji. Nie są ogólnymi kontenerami, ale potrafią rozwiązać
+              konkretną klasę problemów bardzo elegancko.
+            </p>
+
+            <div class="leaf-grid">
+              <article class="leaf" id="union-find">
+                <h3>
+                  <a class="inline-link" href="structures/union-find.html"
+                    >Union-Find / DSU</a
+                  >
+                </h3>
+                <p>
+                  Struktura do zarządzania rozłącznymi zbiorami i pytaniami o
+                  spójność komponentów.
+                </p>
+                <ul>
+                  <li>należy do: <code>Specialized</code></li>
+                  <li>
+                    typowo: łączenie zbiorów i sprawdzanie, czy elementy są w
+                    tym samym zbiorze
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="language-demos.js"></script>
+    <script src="structures-nav.js"></script>
+  </body>
+</html>

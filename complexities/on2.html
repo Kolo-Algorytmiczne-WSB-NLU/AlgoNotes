@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(n^2) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(n^2)</code></h1>
+      <p>
+        Quadratic time najczęściej bierze się z dwóch zagnieżdżonych pętli albo z brute force po
+        wszystkich parach.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(n^2)</code></p>
+        <div class="tag gold">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Każdy z każdym</h2>
+        <p class="section-intro">
+          Jeśli dla każdego elementu patrzysz jeszcze na wiele innych elementów, koszt zaczyna rosnąć
+          kwadratowo. Dla małych danych to bywa w porządku, ale przy większych limitach szybko boli.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>dwie pełne pętle po tablicy</li>
+              <li>przejście po wszystkich polach macierzy</li>
+              <li>brute force po parach</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Typowe limity</h3>
+            <p>
+              W praktyce często da się to obronić dla <code>n ≤ 3000</code>, a przy bardzo małych
+              danych nawet niżej to zupełnie akceptowalny wybór.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Ważna uwaga</h3>
+            <p>
+              W Big-O patrzymy na najgorszy przypadek, więc pętla, która czasem robi mniej, nadal
+              często liczy się jako <code>O(n^2)</code>.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(n^2)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: dwie pętle</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int n = 4;
+    int count = 0;
+
+    for (int i = 0; i &lt; n; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            count++;
+        }
+    }
+
+    printf("%d\n", count);
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: nested loops</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;iostream&gt;
+
+int main() {
+    int n = 4;
+    int count = 0;
+
+    for (int i = 0; i &lt; n; ++i) {
+        for (int j = 0; j &lt; n; ++j) {
+            ++count;
+        }
+    }
+
+    std::cout &lt;&lt; count &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: kwadratowa liczba iteracji</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static void Main()
+    {
+        int n = 4;
+        int count = 0;
+
+        for (int i = 0; i &lt; n; i++)
+        {
+            for (int j = 0; j &lt; n; j++)
+            {
+                count++;
+            }
+        }
+
+        Console.WriteLine(count);
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: każda para indeksów</div>
+            <div class="code-shell">
+              <pre><code>n = 4
+count = 0
+
+for i in range(n):
+    for j in range(n):
+        count += 1
+
+print(count)</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

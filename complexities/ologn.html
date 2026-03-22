@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(log n) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(log n)</code></h1>
+      <p>
+        Logarytm rośnie bardzo wolno. Jeśli w każdej iteracji problem zmniejsza się mniej więcej o
+        połowę, zwykle lądujesz właśnie tutaj.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(log n)</code></p>
+        <div class="tag">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Bardzo powolny wzrost</h2>
+        <p class="section-intro">
+          <code>log(1_000_000)</code> to tylko około 20. W wywiadach i zadaniach <code>O(log n)</code>
+          zwykle oznacza binary search, lookup w balanced BST albo przetwarzanie cyfr liczby.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>binary search i jego warianty</li>
+              <li>lookup w balanced BST</li>
+              <li>operacje na B-tree lub RB-tree</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Domyślna baza</h3>
+            <p>
+              Jeśli nie zaznaczono inaczej, przyjmujemy zwykle <code>log_2(n)</code>, czyli logarytm o
+              podstawie 2.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Typowe limity</h3>
+            <p>
+              Ta klasa często pojawia się przy dużych ograniczeniach, np. dla
+              <code>n &gt; 10^8</code>.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(log n)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: dzielenie problemu na pół</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int n = 100000000;
+    int steps = 0;
+
+    while (n &gt; 0) {
+        steps++;
+        n /= 2;
+    }
+
+    printf("%d\n", steps);
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: logarytmiczna pętla</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;iostream&gt;
+
+int main() {
+    int n = 100000000;
+    int steps = 0;
+
+    while (n &gt; 0) {
+        ++steps;
+        n /= 2;
+    }
+
+    std::cout &lt;&lt; steps &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: każda iteracja zmniejsza n</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static void Main()
+    {
+        int n = 100000000;
+        int steps = 0;
+
+        while (n &gt; 0)
+        {
+            steps++;
+            n /= 2;
+        }
+
+        Console.WriteLine(steps);
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: logarytmiczny spadek</div>
+            <div class="code-shell">
+              <pre><code>n = 100_000_000
+steps = 0
+
+while n &gt; 0:
+    steps += 1
+    n //= 2
+
+print(steps)</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>

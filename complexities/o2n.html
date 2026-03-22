@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(2^n) - Złożoności</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="brand">Algorytms</div>
+      <nav class="site-nav" aria-label="Nawigacja główna">
+        <a href="../index.html">Start</a>
+        <a href="../structures.html">Struktury danych</a>
+        <a class="active" href="../complexities.html">Złożoności</a>
+        <a href="../index-copy.html">Poprzednia wersja</a>
+      </nav>
+    </header>
+
+    <section class="hero hero-detail">
+      <div class="eyebrow">Szczegółowa złożoność</div>
+      <h1><code>O(2^n)</code></h1>
+      <p>
+        To koszt wykładniczy. Rośnie bardzo szybko i zwykle oznacza backtracking, podzbiory albo
+        rekurencję, która rozgałęzia się na dwa podobne podproblemy.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="../complexities.html">Wróć do przeglądu</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <p class="path"><a href="../complexities.html">Złożoności</a> / <code>O(2^n)</code></p>
+        <div class="tag gold">Najkrótsza intuicja</div>
+        <h2 class="mt-14">Dwa rozgałęzienia na krok</h2>
+        <p class="section-intro">
+          Taki koszt często pojawia się w kombinatoryce i backtrackingu. Bez memoizacji bardzo szybko
+          staje się za duży, więc zwykle działa tylko dla małych wartości <code>n</code>.
+        </p>
+        <div class="card-grid mt-18">
+          <article class="card">
+            <h3>Typowe przykłady</h3>
+            <ul class="bullet-list">
+              <li>przegląd wszystkich podzbiorów</li>
+              <li>naiwny Fibonacci</li>
+              <li>część problemów backtrackingowych</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Typowe limity</h3>
+            <p>
+              Najczęściej trzeba zostać przy <code>n ≤ 20</code>, chyba że zastosujesz memoizację albo
+              inne przycięcie stanu.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Ważna uwaga</h3>
+            <p>
+              Ten koszt bywa trudniejszy do zauważenia na pierwszy rzut oka, bo często ukrywa się
+              w rekurencji.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="tag gold">Snippet</div>
+        <h2 class="mt-14">Kod w 4 językach</h2>
+        <div class="code-tabs" data-default="cpp">
+          <div class="tab-list" role="tablist" aria-label="Języki dla O(2^n)">
+            <button class="tab-button" type="button" data-tab="c">C</button>
+            <button class="tab-button" type="button" data-tab="cpp">C++</button>
+            <button class="tab-button" type="button" data-tab="csharp">C#</button>
+            <button class="tab-button" type="button" data-tab="python">Python</button>
+          </div>
+
+          <section class="tab-panel" data-panel="c">
+            <div class="code-meta">Przykład: naiwny Fibonacci</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;stdio.h&gt;
+
+int Fib(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    return Fib(n - 1) + Fib(n - 2);
+}
+
+int main(void) {
+    printf("%d\n", Fib(6));
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="cpp">
+            <div class="code-meta">Przykład: klasyczny Fibonacci jak na screenie</div>
+            <div class="code-shell">
+              <pre><code>#include &lt;iostream&gt;
+
+int Fib(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    return Fib(n - 1) + Fib(n - 2);
+}
+
+int main() {
+    std::cout &lt;&lt; Fib(6) &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="csharp">
+            <div class="code-meta">Przykład: rekurencja rozgałęzia się dwa razy</div>
+            <div class="code-shell">
+              <pre><code>using System;
+
+class Program
+{
+    static int Fib(int n)
+    {
+        if (n == 0 || n == 1)
+        {
+            return 1;
+        }
+        return Fib(n - 1) + Fib(n - 2);
+    }
+
+    static void Main()
+    {
+        Console.WriteLine(Fib(6));
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section class="tab-panel" data-panel="python">
+            <div class="code-meta">Przykład: wykładnicza rekurencja</div>
+            <div class="code-shell">
+              <pre><code>def fib(n: int) -&gt; int:
+    if n == 0 or n == 1:
+        return 1
+    return fib(n - 1) + fib(n - 2)
+
+
+print(fib(6))</code></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="code-tabs.js"></script>
+</body>
+</html>
