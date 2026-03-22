@@ -1,0 +1,60 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy static site
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
+      S3_BUCKET_NAME: ${{ vars.S3_BUCKET_NAME }}
+      SITE_DIR: ${{ runner.temp }}/site
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Prepare deployment bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p "$SITE_DIR"
+
+          rsync -av --delete \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude 'infra/' \
+            --exclude 'scripts/' \
+            --exclude '__pycache__/' \
+            --exclude '*.pyc' \
+            ./ "$SITE_DIR/"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: algonotes-production-deploy
+
+      - name: Deploy to S3
+        shell: bash
+        run: |
+          set -euo pipefail
+          aws s3 sync "$SITE_DIR/" "s3://$S3_BUCKET_NAME" --delete --no-progress
