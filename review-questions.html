@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C# / .NET Interview Questions</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --card2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --border: #374151;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, var(--bg) 45%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(8, 15, 30, 0.82);
+      border-bottom: 1px solid rgba(55, 65, 81, 0.85);
+    }
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      color: #f8fafc;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .site-nav a {
+      text-decoration: none;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: #f8fafc;
+      background: rgba(31, 41, 55, 0.95);
+      border-color: rgba(56, 189, 248, 0.26);
+    }
+    header {
+      padding: 48px 20px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; }
+    .subtitle { color: var(--muted); margin: 0; max-width: 760px; }
+    main { max-width: 1100px; margin: 0 auto; padding: 16px 20px 64px; }
+    .toolbar { display: flex; gap: 12px; margin: 0 0 20px; flex-wrap: wrap; }
+    input {
+      flex: 1;
+      min-width: 240px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,.15); }
+    .section-title { margin: 32px 0 12px; font-size: 22px; color: #f9fafb; }
+    details {
+      background: rgba(17,24,39,.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin: 10px 0;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    summary {
+      cursor: pointer;
+      padding: 16px 18px;
+      font-weight: 700;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--accent); font-size: 24px; font-weight: 600; }
+    details[open] summary::after { content: "−"; }
+    .content { padding: 0 18px 18px; border-top: 1px solid var(--border); background: rgba(31,41,55,.45); }
+    .answer-block { margin: 16px 0 0; }
+    .label { color: var(--accent); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .06em; }
+    p { margin: 6px 0 0; }
+    ul { margin: 8px 0 0 20px; padding: 0; }
+    code { background: #020617; border: 1px solid #1f2937; border-radius: 6px; padding: 1px 5px; color: #bae6fd; }
+    pre { background: #020617; border: 1px solid #1f2937; border-radius: 12px; padding: 12px; overflow-x: auto; }
+    .note { color: var(--muted); font-size: 14px; margin-top: 28px; }
+    @media (max-width: 760px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Algorytms</a>
+    <nav class="site-nav" aria-label="Nawigacja główna">
+      <a href="index.html">Start</a>
+      <a href="structures.html">Struktury danych</a>
+      <a href="complexities.html">Złożoności</a>
+      <a class="active" href="review-questions.html">Review Questions</a>
+      <a href="index-copy.html">Poprzednia wersja</a>
+    </nav>
+  </div>
+</div>
+<header>
+  <h1>C# / .NET Interview Questions</h1>
+  <p class="subtitle">Zagadnienia z bazy pytań. Każde pytanie można rozwinąć: najpierw masz krótką odpowiedź, potem bardziej rozbudowane wyjaśnienie.</p>
+</header>
+<main>
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Szukaj zagadnienia, np. async void, semaphore, DI..." />
+  </div>
+
+  <h2 class="section-title">C# language & runtime</h2>
+
+  <details class="qa"><summary>Difference between <code>out</code>, <code>in</code> and <code>ref</code></summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>ref</code> przekazuje zmienną przez referencję do odczytu i zapisu, <code>out</code> służy głównie do zwracania wartości z metody, a <code>in</code> przekazuje argument przez referencję tylko do odczytu.</p></div><div class="answer-block"><div class="label">Szerzej</div><p><code>ref</code> wymaga, żeby zmienna była zainicjalizowana przed wywołaniem i pozwala metodzie ją zmienić. <code>out</code> nie wymaga wcześniejszej inicjalizacji, ale metoda musi przypisać wartość przed zakończeniem. <code>in</code> jest przydatne szczególnie przy dużych strukturach, bo unika kopiowania, ale chroni argument przed modyfikacją.</p><pre><code>void Change(ref int x) =&gt; x++;
+void Create(out int x) =&gt; x = 10;
+void Read(in BigStruct value) { /* read only */ }</code></pre></div></div></details>
+
+  <details class="qa"><summary>Using statement</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>using</code> zapewnia automatyczne wywołanie <code>Dispose()</code> na obiekcie implementującym <code>IDisposable</code>.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Używa się go do zasobów, które trzeba jawnie zwolnić, np. plików, połączeń bazodanowych, streamów albo obiektów trzymających uchwyty systemowe. Nawet jeśli wystąpi wyjątek, <code>Dispose()</code> zostanie wywołane, bo kompilator tłumaczy to na blok <code>try/finally</code>.</p><pre><code>using var stream = File.OpenRead("file.txt");
+// stream.Dispose() wykona się automatycznie na końcu zakresu</code></pre></div></div></details>
+
+  <details class="qa"><summary>Using statement and IL</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>using</code> kompiluje się do konstrukcji podobnej do <code>try/finally</code>, gdzie w <code>finally</code> wywoływany jest <code>Dispose()</code>.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>To nie jest magiczny mechanizm runtime, tylko składnia ułatwiająca bezpieczne zwalnianie zasobów. Dla klasycznego <code>using</code> kompilator generuje kod, który najpierw tworzy obiekt, potem wykonuje blok, a na końcu niezależnie od wyniku sprawdza, czy obiekt nie jest <code>null</code> i wywołuje <code>Dispose()</code>.</p><pre><code>var resource = new Resource();
+try
+{
+    resource.Work();
+}
+finally
+{
+    resource?.Dispose();
+}</code></pre></div></div></details>
+
+  <details class="qa"><summary>Why use StringBuilder in C#?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>StringBuilder</code> jest używany, gdy wielokrotnie modyfikujemy tekst, bo <code>string</code> jest niemutowalny i każda zmiana tworzy nowy obiekt.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Przy kilku konkatenacjach zwykły <code>+</code> jest OK. Problem pojawia się w pętlach lub przy budowaniu dużego tekstu, bo wiele operacji na <code>string</code> generuje dużo tymczasowych obiektów i zwiększa presję na GC. <code>StringBuilder</code> trzyma bufor, który można modyfikować efektywniej.</p><pre><code>var sb = new StringBuilder();
+foreach (var item in items)
+    sb.AppendLine(item.Name);
+
+string result = sb.ToString();</code></pre></div></div></details>
+
+  <details class="qa"><summary>Async void</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>async void</code> jest złe w większości przypadków, bo nie da się go awaitować i trudniej obsłużyć wyjątki. Wyjątek: event handlery.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Metody asynchroniczne powinny zwykle zwracać <code>Task</code> albo <code>Task&lt;T&gt;</code>. Dzięki temu kod wywołujący może poczekać na zakończenie, obsłużyć wyjątek i testować metodę. <code>async void</code> jest akceptowalne głównie w UI/eventach, gdzie sygnatura wymaga <code>void</code>.</p><pre><code>// Dobrze
+public async Task SaveAsync() { await repository.SaveAsync(); }
+
+// Tylko dla event handlerów
+private async void Button_Click(object sender, EventArgs e) { await SaveAsync(); }</code></pre></div></div></details>
+
+  <details class="qa"><summary>Static constructor</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Statyczny konstruktor inicjalizuje statyczny stan typu i uruchamia się automatycznie raz, przed pierwszym użyciem typu.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Nie ma parametrów, nie można go wywołać ręcznie i nie może mieć modyfikatora dostępu. Jest używany np. do przygotowania statycznych pól, cache albo konfiguracji typu. Trzeba uważać, bo wyjątek w statycznym konstruktorze może spowodować <code>TypeInitializationException</code> i typ może być nieużywalny w danym AppDomain/procesie.</p><pre><code>class Settings
+{
+    public static readonly string AppName;
+
+    static Settings()
+    {
+        AppName = "MyApp";
+    }
+}</code></pre></div></div></details>
+
+  <details class="qa"><summary>Struct vs Class</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>struct</code> to value type, zwykle kopiowany przez wartość. <code>class</code> to reference type, gdzie zmienna przechowuje referencję do obiektu.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Struktury są dobre dla małych, prostych, często niemutowalnych wartości, np. <code>DateTime</code>, <code>Guid</code>, małe value objecty. Klasy są lepsze dla obiektów z tożsamością, większym stanem, dziedziczeniem i cyklem życia. Duże mutowalne struktury mogą powodować błędy i kosztowne kopiowanie.</p><ul><li><code>struct</code>: value type, nie może dziedziczyć po innej strukturze lub klasie, domyślnie nie-nullowalny.</li><li><code>class</code>: reference type, obsługuje dziedziczenie, może być <code>null</code>.</li></ul></div></div></details>
+
+  <details class="qa"><summary>C# Heap vs Stack</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Stack przechowuje m.in. ramki wywołań i lokalne wartości, a heap przechowuje obiekty zarządzane przez GC.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Stack jest szybki i działa według kolejności wywołań metod. Heap jest używany dla obiektów, które mogą żyć dłużej niż pojedyncza metoda. Ważne: stwierdzenie "value type zawsze na stacku" jest uproszczeniem. Value type może być częścią obiektu na heapie, np. jako pole klasy albo po boxingu.</p></div></div></details>
+
+  <details class="qa"><summary>Func&lt;&gt;, Action&lt;&gt; and Predicate&lt;&gt;</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>To wbudowane delegaty: <code>Func</code> zwraca wartość, <code>Action</code> nic nie zwraca, a <code>Predicate&lt;T&gt;</code> zwraca <code>bool</code>.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Delegaty pozwalają przekazywać metody jako argumenty. <code>Func&lt;T, TResult&gt;</code> często pojawia się w LINQ, <code>Action&lt;T&gt;</code> przy operacjach typu "wykonaj coś", a <code>Predicate&lt;T&gt;</code> przy filtrowaniu warunkowym.</p><pre><code>Func&lt;int, int&gt; square = x =&gt; x * x;
+Action&lt;string&gt; log = msg =&gt; Console.WriteLine(msg);
+Predicate&lt;int&gt; isEven = x =&gt; x % 2 == 0;</code></pre></div></div></details>
+
+  <details class="qa"><summary>What is "Friend Assembly"?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Friend Assembly pozwala jednej assembly widzieć elementy <code>internal</code> z drugiej assembly przez atrybut <code>InternalsVisibleTo</code>.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Najczęściej używa się tego w testach, gdy projekt testowy ma testować klasy lub metody oznaczone jako <code>internal</code>, bez robienia ich publicznymi. Atrybut dodaje się zwykle w projekcie produkcyjnym.</p><pre><code>[assembly: InternalsVisibleTo("MyProject.Tests")]</code></pre></div></div></details>
+
+  <details class="qa"><summary>What is default <code>System.String</code>?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Domyślna wartość <code>string</code> to <code>null</code>, bo <code>System.String</code> jest typem referencyjnym.</p></div><div class="answer-block"><div class="label">Szerzej</div><p><code>string</code> jest aliasem dla <code>System.String</code>. Mimo że zachowuje się trochę jak wartość, np. jest niemutowalny i ma przeciążony operator <code>==</code>, nadal jest reference type. Dlatego <code>default(string)</code> daje <code>null</code>, a nie pusty tekst.</p><pre><code>string s = default; // null
+string empty = string.Empty; // ""</code></pre></div></div></details>
+
+  <details class="qa"><summary><code>throw ex</code> vs <code>throw</code></summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>throw</code> zachowuje oryginalny stack trace, a <code>throw ex</code> go resetuje i utrudnia debugowanie.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>W bloku <code>catch</code>, jeśli chcesz przekazać wyjątek dalej, używaj samego <code>throw;</code>. <code>throw ex;</code> traktuje wyjątek jak rzucony od nowa z aktualnego miejsca, przez co można stracić informację, gdzie błąd powstał pierwotnie.</p><pre><code>catch (Exception ex)
+{
+    logger.LogError(ex, "Error");
+    throw; // dobrze
+}</code></pre></div></div></details>
+
+  <details class="qa"><summary>Span&lt;T&gt; vs Memory&lt;T&gt;</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>Span&lt;T&gt;</code> jest szybkim widokiem na pamięć, ale działa tylko na stacku. <code>Memory&lt;T&gt;</code> może być przechowywane na heapie i używane z async.</p></div><div class="answer-block"><div class="label">Szerzej</div><p><code>Span&lt;T&gt;</code> to <code>ref struct</code>, więc nie może być polem klasy, nie może być boxowany i nie może przechodzić przez <code>await</code>. Dzięki temu jest bardzo bezpieczny i wydajny do pracy z fragmentami tablic, stringów lub pamięci. <code>Memory&lt;T&gt;</code> jest mniej ograniczone i nadaje się do API asynchronicznych, a gdy potrzebujesz bezpośredniego dostępu, możesz wywołać <code>.Span</code>.</p></div></div></details>
+
+  <details class="qa"><summary>What is Reflection and when to use it?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Reflection pozwala odczytywać metadane typów i dynamicznie tworzyć lub wywoływać elementy w runtime.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Możesz sprawdzić właściwości, metody, atrybuty, konstruktory albo dynamicznie utworzyć obiekt. Używa się tego w serializerach, ORM-ach, DI containerach, frameworkach testowych i pluginach. Minusy: jest wolniejsze, mniej bezpieczne typowo i trudniejsze w utrzymaniu niż zwykły kod.</p><pre><code>var type = typeof(User);
+var props = type.GetProperties();</code></pre></div></div></details>
+
+  <h2 class="section-title">Memory, GC & resources</h2>
+
+  <details class="qa"><summary>Strong vs weak reference in GC</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Strong reference utrzymuje obiekt przy życiu, a weak reference pozwala GC usunąć obiekt, jeśli nie ma do niego silnych referencji.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Normalna zmienna wskazująca na obiekt jest silną referencją. Dopóki istnieje, GC nie zwolni obiektu. <code>WeakReference</code> jest użyteczne np. w cache, gdzie chcesz korzystać z obiektu, jeśli jeszcze istnieje, ale nie chcesz blokować jego usunięcia przez GC.</p><pre><code>var weak = new WeakReference&lt;User&gt;(user);
+if (weak.TryGetTarget(out var cachedUser))
+{
+    // obiekt jeszcze żyje
+}</code></pre></div></div></details>
+
+  <details class="qa"><summary>Dispose vs Finalizer</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>Dispose()</code> zwalnia zasoby deterministycznie, a finalizer jest awaryjnym mechanizmem uruchamianym przez GC w nieokreślonym czasie.</p></div><div class="answer-block"><div class="label">Szerzej</div><p><code>IDisposable</code> stosuje się, gdy klasa trzyma zasoby wymagające jawnego zwolnienia. Finalizer, czyli destruktor w C#, powinien być rzadki i używany głównie przy bezpośrednim trzymaniu zasobów niezarządzanych. Finalizery obciążają GC i nie gwarantują natychmiastowego zwolnienia zasobów.</p></div></div></details>
+
+  <details class="qa"><summary>Memory leak on production scenario</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>W .NET memory leak najczęściej oznacza, że aplikacja nadal trzyma referencje do obiektów, których już logicznie nie potrzebuje.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Typowe przyczyny to statyczne kolekcje, nieodpinane eventy, źle zaprojektowany cache, singleton trzymający scoped zależności, niezwolnione zasoby, rosnące kolejki albo błędne użycie <code>HttpClient</code> i streamów. Na produkcji sprawdza się metryki pamięci, dump procesu, liczbę obiektów i ścieżki referencji w narzędziach typu dotMemory, PerfView, Visual Studio Diagnostics albo <code>dotnet-dump</code>.</p></div></div></details>
+
+  <h2 class="section-title">Concurrency & threading</h2>
+
+  <details class="qa"><summary>What is a semaphore?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Semaphore ogranicza liczbę wątków lub operacji, które mogą jednocześnie wejść do danego fragmentu kodu.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>W .NET często używa się <code>SemaphoreSlim</code>, szczególnie w kodzie async. Przykład: chcesz pobierać dane dla 1000 elementów, ale maksymalnie 5 requestów naraz. Semaphore działa jak licznik dostępnych wejść: <code>WaitAsync()</code> zajmuje miejsce, a <code>Release()</code> je oddaje.</p><pre><code>private readonly SemaphoreSlim _semaphore = new(5);
+
+await _semaphore.WaitAsync();
+try
+{
+    await DoWorkAsync();
+}
+finally
+{
+    _semaphore.Release();
+}</code></pre></div></div></details>
+
+  <h2 class="section-title">.NET platform & build</h2>
+
+  <details class="qa"><summary>.NET Framework vs .NET Core / modern .NET</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>.NET Framework to starsza, głównie Windowsowa platforma. .NET Core i obecny .NET są cross-platform, szybsze i aktywnie rozwijane.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>.NET Framework jest używany głównie w starszych aplikacjach Windows, WebForms, WCF i legacy ASP.NET. .NET Core był nową, modularną platformą działającą na Windows, Linux i macOS. Od .NET 5 nazwa została uproszczona do ".NET". Nowe projekty zwykle tworzy się na aktualnym .NET, np. .NET 8 lub .NET 9.</p></div></div></details>
+
+  <details class="qa"><summary>JIT vs AOT in .NET</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>JIT kompiluje kod w czasie działania aplikacji, a AOT kompiluje go wcześniej, przed uruchomieniem.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>W typowym .NET kod C# jest kompilowany do IL, a potem JIT zamienia IL na kod maszynowy podczas działania programu. AOT może skrócić startup i zmniejszyć zależność od runtime, ale może mieć ograniczenia, np. przy reflection lub dynamicznym generowaniu kodu. Native AOT jest przydatne m.in. w małych usługach, CLI i serverless.</p></div></div></details>
+
+  <details class="qa"><summary>Debug vs Release build configuration</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Debug jest do developmentu i debugowania, Release jest zoptymalizowany pod uruchomienie produkcyjne.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Debug zwykle zawiera pełniejsze symbole debugowania, mniejsze optymalizacje i ułatwia krokowe przechodzenie przez kod. Release włącza optymalizacje kompilatora, może inline'ować metody i usuwać nieużywany kod. Dlatego bugi czasem ujawniają się tylko w Release, szczególnie przy współbieżności lub zależności od timingów.</p></div></div></details>
+
+  <details class="qa"><summary>What is code obfuscation?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Obfuskacja utrudnia odczytanie i zrozumienie skompilowanego kodu po dekompilacji.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>W .NET kod IL można relatywnie łatwo dekompilować, dlatego obfuskatory zmieniają nazwy klas i metod, zaciemniają flow programu, szyfrują stringi albo utrudniają reverse engineering. Nie daje to pełnego bezpieczeństwa, ale zwiększa koszt analizy kodu. Nie należy traktować obfuskacji jako zamiennika prawdziwych mechanizmów bezpieczeństwa.</p></div></div></details>
+
+  <h2 class="section-title">Design, DI & architecture</h2>
+
+  <details class="qa"><summary>DI - types of object lifetimes</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>W ASP.NET Core DI są trzy główne lifetime'y: <code>Transient</code>, <code>Scoped</code> i <code>Singleton</code>.</p></div><div class="answer-block"><div class="label">Szerzej</div><p><code>Transient</code> tworzy nową instancję przy każdym żądaniu zależności. <code>Scoped</code> tworzy jedną instancję na scope, w web API zwykle na jeden request HTTP. <code>Singleton</code> tworzy jedną instancję na całe życie aplikacji. Trzeba uważać, żeby singleton nie trzymał zależności scoped, np. <code>DbContext</code>.</p><pre><code>services.AddTransient&lt;IEmailSender, EmailSender&gt;();
+services.AddScoped&lt;IOrderService, OrderService&gt;();
+services.AddSingleton&lt;IClock, SystemClock&gt;();</code></pre></div></div></details>
+
+  <details class="qa"><summary>ICloneable interface in Prototype pattern</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p><code>ICloneable</code> pozwala tworzyć kopię obiektu, ale w praktyce bywa problematyczne, bo nie mówi jasno, czy kopia jest płytka czy głęboka.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Prototype polega na tworzeniu nowych obiektów przez klonowanie istniejącego wzorca. <code>ICloneable.Clone()</code> zwraca <code>object</code> i nie definiuje semantyki kopii. Dlatego często lepiej zrobić własną metodę, np. <code>Copy()</code>, <code>DeepCopy()</code> albo konstruktor kopiujący.</p><pre><code>public Order Copy()
+{
+    return new Order(Id, CustomerName, Items.ToList());
+}</code></pre></div></div></details>
+
+  <details class="qa"><summary>Order Service Code Review</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>W code review serwisu zamówień patrzysz na poprawność logiki biznesowej, transakcje, walidację, obsługę błędów, testowalność i zależności.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Dobry <code>OrderService</code> nie powinien być "God service". Warto sprawdzić, czy logika domenowa nie jest ukryta w kontrolerze, czy operacje zapisu są transakcyjne, czy nie ma duplikacji, czy zależności są przez interfejsy, czy nie ma mieszania odpowiedzialności, np. płatności, maili, magazynu i faktur w jednej metodzie. Ważne są też testy przypadków brzegowych: brak produktu, brak stanu magazynowego, nieudana płatność, retry, idempotencja.</p></div></div></details>
+
+  <h2 class="section-title">Tematy widoczne częściowo na zdjęciu</h2>
+
+  <details class="qa"><summary>What type would you use to store date/time with timezone in C#?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>Najczęściej użyłbym <code>DateTimeOffset</code>, bo przechowuje datę i czas razem z offsetem względem UTC.</p></div><div class="answer-block"><div class="label">Szerzej</div><p><code>DateTime</code> może być lokalny, UTC albo nieokreślony, co łatwo prowadzi do błędów. <code>DateTimeOffset</code> jest lepszym wyborem dla momentów w czasie, które mają informację o przesunięciu. Jeśli potrzebujesz pełnej strefy typu <code>Europe/Warsaw</code> i zasad DST, przechowuj dodatkowo identyfikator strefy albo użyj biblioteki typu NodaTime.</p></div></div></details>
+
+  <details class="qa"><summary>Which types are delivered with .NET?</summary><div class="content"><div class="answer-block"><div class="label">Krótko</div><p>.NET dostarcza bogaty zestaw typów bazowych, np. <code>string</code>, <code>int</code>, <code>bool</code>, <code>DateTime</code>, kolekcje, wyjątki, delegaty i typy asynchroniczne.</p></div><div class="answer-block"><div class="label">Szerzej</div><p>Podstawą jest Base Class Library. Zawiera typy prymitywne, kolekcje jak <code>List&lt;T&gt;</code> i <code>Dictionary&lt;TKey,TValue&gt;</code>, typy IO, networking, reflection, threading, LINQ, taski oraz wiele API frameworkowych. Na rozmowie warto podkreślić różnicę między aliasami C# jak <code>int</code> a typami CLR jak <code>System.Int32</code>.</p></div></div></details>
+
+  <p class="note">Uwaga: dwa tytuły w źródłowym materiale były ucięte, więc zostały odtworzone jako najbardziej prawdopodobne tematy: date/time type oraz built-in .NET types.</p>
+</main>
+<script>
+  const search = document.getElementById('search');
+  const items = [...document.querySelectorAll('.qa')];
+  search.addEventListener('input', () => {
+    const q = search.value.toLowerCase().trim();
+    items.forEach(item => {
+      const text = item.innerText.toLowerCase();
+      item.style.display = text.includes(q) ? '' : 'none';
+    });
+  });
+</script>
+</body>
+</html>
